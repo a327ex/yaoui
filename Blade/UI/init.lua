@@ -2,7 +2,7 @@ local ui_path = ... .. '.'
 local UI = {}
 require(ui_path .. 'utf8-l')
 UI.Object = require(ui_path .. 'classic.classic')
-UI.Input = require(ui_path .. 'Input.Input')
+UI.Input = require(ui_path .. 'input.Input')
 UI.Text = require(ui_path .. 'popo.Text')
 UI.Math = require(ui_path .. 'mlib.mlib')
 

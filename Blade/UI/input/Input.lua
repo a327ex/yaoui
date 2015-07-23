@@ -11,7 +11,7 @@ local current_index = 0
 while #current_path ~= #input_path do
     local _, index, temp = input_path:find( '(.-)%.', current_index )
     if not index then current_path = input_path break end
-    if love.filesystem.exists( current_path .. temp ) then -- Allow for . in folder names (even though this isn't currently allowed using require...)
+    if love.filesystem.isDirectory( current_path .. temp ) then -- Allow for . in folder names (even though this isn't currently allowed using require...)
         current_path = current_path .. temp .. '/'
         current_index = index + 1
     end
