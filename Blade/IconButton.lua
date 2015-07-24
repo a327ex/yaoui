@@ -6,6 +6,8 @@ function IconButton:new(blade, settings)
     self.blade = blade
     self.size = settings.size
     self.name = settings.name
+    self.x, self.y = 0, 0
+    self.w, self.h = self.size, self.size
     self.button = self.blade.UI.Button(0, 0, self.size, self.size, {
         blade = self.blade,
         extensions = {self.blade.Theme.IconButton},
@@ -22,6 +24,7 @@ function IconButton:update(dt)
         end
     end
 
+    self.button.x, self.button.y = self.x, self.y
     self.button:update(dt)
 end
 
