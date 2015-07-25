@@ -1,10 +1,10 @@
-local foo_path = (...):match('(.-)[^%.]+$') .. '.'
-local Object = require(foo_path .. 'UI.classic.classic')
+local yui_path = (...):match('(.-)[^%.]+$') .. '.'
+local Object = require(yui_path .. 'UI.classic.classic')
 local View = Object:extend('View')
 
-function View:new(foo, x, y, w, h, layout)
+function View:new(yui, x, y, w, h, layout)
     if not layout then error('No layout specified') end
-    self.foo = foo
+    self.yui = yui
     self.x, self.y = x, y
     self.w, self.h = w, h
     self.layout = layout 

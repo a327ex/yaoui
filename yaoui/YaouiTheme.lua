@@ -1,16 +1,16 @@
-local FooTheme = {}
+local YaouiTheme = {}
 
-FooTheme.IconButton = {}
-FooTheme.IconButton.new = function(self)
+YaouiTheme.IconButton = {}
+YaouiTheme.IconButton.new = function(self)
     self.color = {255, 255, 255}
-    self.timer = self.foo.Timer()
+    self.timer = self.yui.Timer()
 end
 
-FooTheme.IconButton.update = function(self, dt)
+YaouiTheme.IconButton.update = function(self, dt)
     self.timer:update(dt)
 end
 
-FooTheme.IconButton.draw = function(self)
+YaouiTheme.IconButton.draw = function(self)
     if self.enter then self.timer:tween('color', 0.25, self, {color = {160, 160, 160}}, 'linear')
     elseif self.exit then self.timer:tween('color', 0.25, self, {color = {255, 255, 255}}, 'linear') end
     
@@ -25,4 +25,4 @@ FooTheme.IconButton.draw = function(self)
     love.graphics.setColor(255, 255, 255)
 end
 
-return FooTheme
+return YaouiTheme

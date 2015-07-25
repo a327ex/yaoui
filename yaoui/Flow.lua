@@ -1,10 +1,10 @@
-local foo_path = (...):match('(.-)[^%.]+$')
-local Object = require(foo_path .. 'UI.classic.classic')
+local yui_path = (...):match('(.-)[^%.]+$')
+local Object = require(yui_path .. 'UI.classic.classic')
 local Flow = Object:extend('Flow')
 
-function Flow:new(foo, layout)
+function Flow:new(yui, layout)
     if not layout then error('No layout specified') end
-    self.foo = foo
+    self.yui = yui
     self.layout = layout
     self.name = layout.name
 
