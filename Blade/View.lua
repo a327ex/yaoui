@@ -28,8 +28,98 @@ function View:new(blade, x, y, w, h, layout)
     self.layout[1].w = self.w - self.margin_left - self.margin_right
     self.layout[1].h = self.h - self.margin_top - self.margin_bottom
 
+    self:setElementSize(self.layout[1])
+    self:setElementPosition(self.layout[1], self.x + self.margin_left, self.y + self.margin_top)
+
+    --[[
     -- Build child
     self.layout[1]:build(self.x + self.margin_left, self.y + self.margin_top, self.w - self.margin_left - self.margin_right, self.h - self.margin_top - self.margin_bottom)
+    ]]--
+end
+
+function View:setElementPosition(element, x, y)
+    element.x, element.y = x, y
+
+    if element.class_name == 'Stack' then
+        local h = 0
+        for i, e in ipairs(element.layout) do
+            self:setElementPosition(e, element.x + element.margin_left, element.y + element.margin_top + h + (i-1)*element.spacing)
+            h = h + e.h
+        end
+        if element.layout.bottom then
+            h = 0
+            for i = #element.layout.bottom, 1, -1 do
+                local e = element.layout.bottom[i]
+                self:setElementPosition(e, element.x + element.margin_left, 
+                                        element.y + element.margin_top + element.h - element.margin_bottom - e.h - (#element.layout.bottom - i)*element.spacing - h)
+                h = h + e.h
+            end
+        end
+
+    elseif element.class_name == 'Flow' then
+        local w = 0
+        for i, e in ipairs(element.layout) do
+            self:setElementPosition(e, element.x + element.margin_left + w + (i-1)*element.spacing, element.y + element.margin_top)
+            w = w + e.w
+        end
+        if element.layout.right then
+            w = 0
+            for i = #element.layout.right, 1, -1 do
+                local e = element.layout.right[i]
+                self:setElementposition(e, element.x + element.margin_left + element.w - element.margin_right - e.w - (#element.layout.right - i)*element.spacing - w)
+                w = w + e.w
+            end
+        end
+    end
+end
+
+function View:setElementSize(element)
+    if element.class_name == 'Stack' then
+        for _, e in ipairs(element.layout) do
+            if not e.w or not e.h then self:setElementSize(e) end
+        end
+        if element.layout.bottom then
+            for _, e in ipairs(element.layout.bottom) do
+                if not e.w or not e.h then self:setElementSize(e) end
+            end
+        end
+
+        -- Set sizes 
+        local min = 0
+        for _, e in ipairs(element.layout) do
+            if e.w > min then min = e.w end
+        end
+        if element.layout.bottom then
+            for _, element in ipairs(self.layout.bottom) do
+                if element.w > min then min = element.w end
+            end
+        end
+        element.w = element.layout.w or (min + element.margin_left + element.margin_right)
+        element.h = element.layout.h or self.h -- dummy
+
+    elseif element.class_name == 'Flow' then
+        for _, e in ipairs(element.layout) do
+            if not e.w or not e.h then self:setElementSize(e) end
+        end
+        if element.layout.right then
+            for _, e in ipairs(element.layout.right) do
+                if not e.w or not e.h then self:setElementSize(e) end
+            end
+        end
+
+        -- Set sizes 
+        local min = 0
+        for _, e in ipairs(element.layout) do
+            if e.h > min then min = e.h end
+        end
+        if element.layout.right then
+            for _, e in ipairs(element.layout.right) do
+                if e.h > min then min = e.h end
+            end
+        end
+        element.h = element.layout.h or (min + element.margin_top + element.margin_bottom)
+        element.w = element.layout.w or self.w -- dummy
+    end
 end
 
 function View:update(dt)
