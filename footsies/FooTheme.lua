@@ -1,16 +1,16 @@
-local BladeTheme = {}
+local FooTheme = {}
 
-BladeTheme.IconButton = {}
-BladeTheme.IconButton.new = function(self)
+FooTheme.IconButton = {}
+FooTheme.IconButton.new = function(self)
     self.color = {255, 255, 255}
-    self.timer = self.blade.Timer()
+    self.timer = self.foo.Timer()
 end
 
-BladeTheme.IconButton.update = function(self, dt)
+FooTheme.IconButton.update = function(self, dt)
     self.timer:update(dt)
 end
 
-BladeTheme.IconButton.draw = function(self)
+FooTheme.IconButton.draw = function(self)
     if self.enter then self.timer:tween('color', 0.25, self, {color = {160, 160, 160}}, 'linear')
     elseif self.exit then self.timer:tween('color', 0.25, self, {color = {255, 255, 255}}, 'linear') end
     
@@ -25,4 +25,4 @@ BladeTheme.IconButton.draw = function(self)
     love.graphics.setColor(255, 255, 255)
 end
 
-return BladeTheme
+return FooTheme

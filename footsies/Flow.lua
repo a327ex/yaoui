@@ -1,26 +1,24 @@
-local blade_path = (...):match('(.-)[^%.]+$')
-local Object = require(blade_path .. 'UI.classic.classic')
-local Stack = Object:extend('Stack')
+local foo_path = (...):match('(.-)[^%.]+$')
+local Object = require(foo_path .. 'UI.classic.classic')
+local Flow = Object:extend('Flow')
 
-function Stack:new(blade, layout)
+function Flow:new(foo, layout)
     if not layout then error('No layout specified') end
-    self.blade = blade
+    self.foo = foo
     self.layout = layout
     self.name = layout.name
 
     -- Set parents and names
     for i, element in ipairs(layout) do
-        if element.class_name == 'Stack' then error("Stacks cannot have Stacks as their children") end
         element.parent = self
         self[i] = element
         if element.name then self[element.name] = element end
     end
-    if layout.bottom then
-        self.bottom = {}
-        for i, element in ipairs(layout.bottom) do
-            if element.class_name == 'Stack' then error("Stacks cannot have Stacks as their children") end
+    if layout.right then
+        self.right = {}
+        for i, element in ipairs(layout.right) do
             element.parent = self
-            self.bottom[i] = element
+            self.right[i] = element
             if element.name then self[element.name] = element end
         end
     end
@@ -33,20 +31,20 @@ function Stack:new(blade, layout)
     self.spacing = layout.spacing or 8
 end
 
-function Stack:update(dt)
+function Flow:update(dt)
     for _, element in ipairs(self.layout) do element:update(dt) end
-    if self.layout.bottom then 
-        for _, element in ipairs(self.layout.bottom) do element:update(dt) end
+    if self.layout.right then 
+        for _, element in ipairs(self.layout.right) do element:update(dt) end
     end
 end
 
-function Stack:draw()
+function Flow:draw()
     for _, element in ipairs(self.layout) do element:draw() end
-    if self.layout.bottom then 
-        for _, element in ipairs(self.layout.bottom) do element:draw() end
+    if self.layout.right then 
+        for _, element in ipairs(self.layout.right) do element:draw() end
     end
 
     love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
 end
 
-return Stack
+return Flow

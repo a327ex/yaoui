@@ -1,10 +1,10 @@
-local blade_path = (...):match('(.-)[^%.]+$') .. '.'
-local Object = require(blade_path .. 'UI.classic.classic')
+local foo_path = (...):match('(.-)[^%.]+$') .. '.'
+local Object = require(foo_path .. 'UI.classic.classic')
 local View = Object:extend('View')
 
-function View:new(blade, x, y, w, h, layout)
+function View:new(foo, x, y, w, h, layout)
     if not layout then error('No layout specified') end
-    self.blade = blade
+    self.foo = foo
     self.x, self.y = x, y
     self.w, self.h = w, h
     self.layout = layout 
@@ -71,9 +71,6 @@ function View:setElementPosition(element, x, y)
 end
 
 function View:reSetElementSize(element, parent)
-    print(parent.class_name, parent.name, parent.x, parent.y, parent.w, parent.h)
-    print(element.class_name, element.name, element.x, element.y, element.w, element.h)
-    print()
     if element.class_name == 'Stack' then
         element.h = parent.y + parent.h - parent.margin_bottom - element.y
         if element.x + element.w > parent.x + parent.w - parent.margin_right then

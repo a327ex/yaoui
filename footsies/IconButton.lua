@@ -1,18 +1,18 @@
-local blade_path = (...):match('(.-)[^%.]+$')
-local Object = require(blade_path .. 'UI.classic.classic')
+local foo_path = (...):match('(.-)[^%.]+$')
+local Object = require(foo_path .. 'UI.classic.classic')
 local IconButton = Object:extend('IconButton')
 
-function IconButton:new(blade, settings)
-    self.blade = blade
+function IconButton:new(foo, settings)
+    self.foo = foo
     self.size = settings.size
     self.name = settings.name
     self.x, self.y = 0, 0
     self.w, self.h = self.size, self.size
-    self.button = self.blade.UI.Button(0, 0, self.size, self.size, {
-        blade = self.blade,
-        extensions = {self.blade.Theme.IconButton},
-        icon = self.blade.font_awesome[settings.icon], 
-        font = love.graphics.newFont(self.blade.font_awesome_path, settings.size)
+    self.button = self.foo.UI.Button(0, 0, self.size, self.size, {
+        foo = self.foo,
+        extensions = {self.foo.Theme.IconButton},
+        icon = self.foo.font_awesome[settings.icon], 
+        font = love.graphics.newFont(self.foo.font_awesome_path, settings.size)
     })
     self.onClick = settings.onClick
 end
