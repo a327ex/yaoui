@@ -8,6 +8,7 @@ function View:new(blade, x, y, w, h, layout)
     self.x, self.y = x, y
     self.w, self.h = w, h
     self.layout = layout 
+    self.name = self.layout.name
 
     if not self.layout[1] or (self.layout[1] and self.layout[1].class_name ~= 'Stack' and self.layout[1].class_name ~= 'Flow') then
         error('View must have a Stack or Flow as its first element') 
@@ -30,11 +31,7 @@ function View:new(blade, x, y, w, h, layout)
 
     self:setElementSize(self.layout[1])
     self:setElementPosition(self.layout[1], self.x + self.margin_left, self.y + self.margin_top)
-
-    --[[
-    -- Build child
-    self.layout[1]:build(self.x + self.margin_left, self.y + self.margin_top, self.w - self.margin_left - self.margin_right, self.h - self.margin_top - self.margin_bottom)
-    ]]--
+    self:reSetElementSize(self.layout[1], self)
 end
 
 function View:setElementPosition(element, x, y)
@@ -68,6 +65,33 @@ function View:setElementPosition(element, x, y)
                 local e = element.layout.right[i]
                 self:setElementposition(e, element.x + element.margin_left + element.w - element.margin_right - e.w - (#element.layout.right - i)*element.spacing - w)
                 w = w + e.w
+            end
+        end
+    end
+end
+
+function View:reSetElementSize(element, parent)
+    print(parent.class_name, parent.name, parent.x, parent.y, parent.w, parent.h)
+    print(element.class_name, element.name, element.x, element.y, element.w, element.h)
+    print()
+    if element.class_name == 'Stack' then
+        element.h = parent.y + parent.h - parent.margin_bottom - element.y
+        if element.x + element.w > parent.x + parent.w - parent.margin_right then
+            element.w = parent.x + parent.w - parent.margin_right - element.x
+        end
+        for _, e in ipairs(element.layout) do
+            if e.class_name == 'Stack' or e.class_name == 'Flow' then
+                self:reSetElementSize(e, element)
+            end
+        end
+    elseif element.class_name == 'Flow' then
+        element.w = parent.x + parent.w - parent.margin_right - element.x
+        if element.y + element.h > parent.y + parent.h - parent.margin_bottom then
+            element.h = parent.y + parent.h - parent.margin_bottom - element.y
+        end
+        for _, e in ipairs(element.layout) do
+            if e.class_name == 'Stack' or e.class_name == 'Flow' then
+                self:reSetElementSize(e, element)
             end
         end
     end

@@ -67,7 +67,10 @@ function love.load()
                 Blade.IconButton({icon = 'fa-close', size = 20, onClick = function(self) print(2) end}),
                 Blade.Stack({name = 'MainStack', spacing = 4,
                     Blade.IconButton({icon = 'fa-close', size = 20, onClick = function(self) print(3) end}),
+                    Blade.IconButton({icon = 'fa-close', size = 20, onClick = function(self) print(3) end}),
                     Blade.Flow({name = 'MainStack', spacing = 4,
+                        Blade.IconButton({icon = 'fa-close', size = 20, onClick = function(self) print(4) end}),
+                        Blade.IconButton({icon = 'fa-close', size = 20, onClick = function(self) print(4) end}),
                         Blade.IconButton({icon = 'fa-close', size = 20, onClick = function(self) print(4) end}),
                     })
                 })
