@@ -20,12 +20,6 @@ YaouiTheme.Checkbox.update = function(self, dt)
 end
 
 YaouiTheme.Checkbox.draw = function(self)
-    --[[
-    if self.checked then love.graphics.setColor(222, 222, 222)
-    else love.graphics.setColor(64, 64, 64) end
-    love.graphics.rectangle('line', self.x, self.y, self.w, self.h, self.w/16, self.w/16)
-    ]]--
-
     if self.checked_enter then 
         self.check_alpha = 255
         self.check_draw = true
@@ -126,6 +120,17 @@ YaouiTheme.IconButton.draw = function(self)
     local font = love.graphics.getFont()
     love.graphics.setFont(self.font)
     love.graphics.print(self.icon, self.x + self.w/10, self.y + self.h/64)
+    love.graphics.setFont(font)
+    love.graphics.setColor(255, 255, 255)
+end
+
+-- Text
+YaouiTheme.Text = {}
+YaouiTheme.Text.draw = function(self)
+    love.graphics.setColor(222, 222, 222)
+    local font = love.graphics.getFont()
+    love.graphics.setFont(self.font)
+    love.graphics.print(self.text, self.x + self.size/6, self.y + self.font:getHeight()/2 + self.size/4)
     love.graphics.setFont(font)
     love.graphics.setColor(255, 255, 255)
 end

@@ -18,5 +18,7 @@ local Checkbox = require(yaoui_path .. 'Checkbox')
 yaoui.Checkbox = function(...) return Checkbox(yaoui, ...) end
 local IconButton = require(yaoui_path .. 'IconButton')
 yaoui.IconButton = function(...) return IconButton(yaoui, ...) end
+local Text = require(yaoui_path .. 'Text')
+yaoui.Text = function(...) return Text(yaoui, ...) end
 
 return yaoui

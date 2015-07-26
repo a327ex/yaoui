@@ -10,6 +10,7 @@ function love.load()
             yui.IconButton({icon = 'fa-close', size = 20, onClick = function(self) print(1) end}),
             yui.Button({icon = 'fa-check', size = 20, text = 'Button', onClick = function(self) self:setLoading() end}),
             yui.Checkbox({text = 'Checkbox', size = 20}),
+            yui.Text({text = 'Text', size = 20}),
         })
     })
 end
