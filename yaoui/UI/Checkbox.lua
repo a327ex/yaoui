@@ -24,6 +24,7 @@ function Checkbox:new(ui, x, y, w, h, settings)
     self.checked_enter = false
     self.checked_exit = false
     self.checked = false
+    self.checked_str = 'false'
     self.previous_checked = false
 
     self:basePostNew()
@@ -35,17 +36,21 @@ function Checkbox:update(dt, parent)
     if self.resizable then self:resizableUpdate(dt, parent) end
     if self.draggable then self:draggableUpdate(dt, parent) end
 
+    self.checked_enter, self.checked_exit = false, false
+
     -- Check for checked_enter
-    if self.checked and not self.previous_checked then
-        self.checked_enter = true
-    else self.checked_enter = false end
-
-    -- Check for checked_exit
-    if not self.checked and self.previous_checked then
-        self.checked_exit = true
-    else self.checked_exit = false end
-
-    self:basePostUpdate(dt)
+    if self.checked and self.previous_checked then
+        if self.checked_str == 'false' then
+            self.checked_enter = true
+            self.checked_str = 'true'
+        elseif self.checked_str == 'true' then
+            self.checked_exit = true 
+            self.checked_str = 'false'
+        end
+    else 
+        self.checked_enter = false 
+        self.checked_exit = false
+    end
 
     -- Change state
     if self.released and (self.hot or self.selected) then
@@ -53,6 +58,8 @@ function Checkbox:update(dt, parent)
     end
 
     self.previous_checked = self.checked
+
+    self:basePostUpdate(dt)
 end
 
 function Checkbox:draw()
