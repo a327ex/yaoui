@@ -11,8 +11,8 @@ function IconButton:new(yui, settings)
     self.button = self.yui.UI.Button(0, 0, self.size, self.size, {
         yui = self.yui,
         extensions = {self.yui.Theme.IconButton},
-        icon = self.yui.font_awesome[settings.icon], 
-        font = love.graphics.newFont(self.yui.font_awesome_path, settings.size)
+        icon = self.yui.Theme.font_awesome[settings.icon], 
+        font = love.graphics.newFont(self.yui.Theme.font_awesome_path, settings.size)
     })
     self.onClick = settings.onClick
 end

@@ -34,6 +34,28 @@ function View:new(yui, x, y, w, h, layout)
     self:reSetElementSize(self.layout[1], self)
 end
 
+function View:update(dt)
+    self.layout[1]:update(dt)
+    if self.layout.overlay then 
+        for _, element in ipairs(self.layout.overlay) do
+            element:update(dt)
+        end
+    end
+end
+
+function View:draw()
+    self.layout[1]:draw()
+    if self.layout.overlay then
+        for _, element in ipairs(self.layout.overlay) do
+            element:draw()
+        end
+    end
+
+    if self.yui.debug_draw then
+        love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    end
+end
+
 function View:setElementPosition(element, x, y)
     element.x, element.y = x, y
 
@@ -141,26 +163,6 @@ function View:setElementSize(element)
         element.h = element.layout.h or (min + element.margin_top + element.margin_bottom)
         element.w = element.layout.w or self.w -- dummy
     end
-end
-
-function View:update(dt)
-    self.layout[1]:update(dt)
-    if self.layout.overlay then 
-        for _, element in ipairs(self.layout.overlay) do
-            element:update(dt)
-        end
-    end
-end
-
-function View:draw()
-    self.layout[1]:draw()
-    if self.layout.overlay then
-        for _, element in ipairs(self.layout.overlay) do
-            element:draw()
-        end
-    end
-
-    love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
 end
 
 return View

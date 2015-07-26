@@ -44,7 +44,9 @@ function Stack:draw()
         for _, element in ipairs(self.layout.bottom) do element:draw() end
     end
 
-    love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    if self.yui.debug_draw then
+        love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    end
 end
 
 return Stack
