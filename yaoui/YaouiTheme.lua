@@ -5,6 +5,13 @@ YaouiTheme.font_awesome = require(yaoui_path .. '.FontAwesome')
 YaouiTheme.font_awesome_path = yaoui_path .. '/fonts/fontawesome-webfont.ttf'
 YaouiTheme.open_sans_regular = yaoui_path .. '/fonts/OpenSans-Regular.ttf'
 YaouiTheme.open_sans_semibold = yaoui_path .. '/fonts/OpenSans-Semibold.ttf'
+YaouiTheme.hand_cursor = love.mouse.getSystemCursor("hand")
+
+-- Checkbox
+YaouiTheme.Checkbox = {}
+YaouiTheme.Checkbox.draw = function(self)
+
+end
 
 -- Button
 YaouiTheme.Button = {}
@@ -38,7 +45,23 @@ YaouiTheme.Button.draw = function(self)
     love.graphics.setColor(222, 222, 222)
     local font = love.graphics.getFont()
     love.graphics.setFont(self.font)
-    love.graphics.print(self.text, self.x + 10, self.y + 5)
+    if self.icon then
+        if self.parent.icon_position == 'right' then
+            love.graphics.setColor(222, 222, 222)
+            love.graphics.print(self.text, self.x + self.parent.size/2, self.y + math.floor(self.parent.size*0.7/2) - self.parent.size/20)
+            if self.parent.loading then love.graphics.setColor(45, 117, 223) end
+            love.graphics.print(self.icon, self.x + self.parent.size/2 + self.font:getWidth(self.icon)/2 + self.font:getWidth(self.text .. ' '), 
+                                self.y + math.floor(self.parent.size*0.7/2) + self.font:getHeight()/2 - self.parent.size/20, 
+                                self.parent.icon_r, 1, 1, self.font:getWidth(self.icon)/2, self.font:getHeight()/2)
+        else
+            if self.parent.loading then love.graphics.setColor(45, 117, 223) end
+            love.graphics.print(self.icon, self.x + self.parent.size/2 + self.font:getWidth(self.icon)/2, 
+                                self.y + math.floor(self.parent.size*0.7/2) + self.font:getHeight()/2 - self.parent.size/20, 
+                                self.parent.icon_r, 1, 1, self.font:getWidth(self.icon)/2, self.font:getHeight()/2)
+            love.graphics.setColor(222, 222, 222)
+            love.graphics.print(self.text, self.x + self.parent.size/2 + self.font:getWidth(self.parent.original_icon .. ' '), self.y + math.floor(self.parent.size*0.7/2) - self.parent.size/20)
+        end
+    else love.graphics.print(self.text, self.x + self.parent.size/2, self.y + math.floor(self.parent.size*0.7/2) - self.parent.size/20) end
     love.graphics.setFont(font)
     love.graphics.setColor(255, 255, 255)
 end

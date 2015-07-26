@@ -4,7 +4,7 @@ local IconButton = Object:extend('IconButton')
 
 function IconButton:new(yui, settings)
     self.yui = yui
-    self.size = settings.size
+    self.size = settings.size or 20
     self.name = settings.name
     self.x, self.y = 0, 0
     self.w, self.h = self.size, self.size
@@ -26,6 +26,9 @@ function IconButton:update(dt)
 
     self.button.x, self.button.y = self.x, self.y
     self.button:update(dt)
+
+    if self.button.enter then love.mouse.setCursor(self.yui.Theme.hand_cursor) end
+    if self.button.exit then love.mouse.setCursor() end
 end
 
 function IconButton:draw()
