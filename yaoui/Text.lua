@@ -4,6 +4,7 @@ local Text = Object:extend('Text')
 
 function Text:new(yui, settings)
     self.yui = yui
+    self.x, self.y = 0, 0
     self.text = settings.text or ''
     self.size = settings.size or 20
     self.font = love.graphics.newFont(self.yui.Theme.open_sans_regular, math.floor(self.size*0.7))

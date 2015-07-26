@@ -5,7 +5,7 @@ local Checkbox = Object:extend('Checkbox')
 function Checkbox:new(yui, settings)
     self.yui = yui
     self.x, self.y = 0, 0
-    self.size = settings.size or 18
+    self.size = settings.size or 20
     self.checked = settings.checked
     self.text = settings.text
     self.icon = self.yui.Theme.font_awesome['fa-check'] 

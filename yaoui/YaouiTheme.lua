@@ -7,42 +7,6 @@ YaouiTheme.open_sans_regular = yaoui_path .. '/fonts/OpenSans-Regular.ttf'
 YaouiTheme.open_sans_semibold = yaoui_path .. '/fonts/OpenSans-Semibold.ttf'
 YaouiTheme.hand_cursor = love.mouse.getSystemCursor("hand")
 
--- Checkbox
-YaouiTheme.Checkbox = {}
-YaouiTheme.Checkbox.new = function(self)
-    self.check_alpha = 255
-    self.check_draw = false
-    self.timer = self.yui.Timer()
-end
-
-YaouiTheme.Checkbox.update = function(self, dt)
-    self.timer:update(dt)
-end
-
-YaouiTheme.Checkbox.draw = function(self)
-    if self.checked_enter then 
-        self.check_alpha = 255
-        self.check_draw = true
-    elseif self.checked_exit then self.timer:tween('check', 0.15, self, {check_alpha = 0}, 'linear', function() self.check_draw = false end) end
-
-    if self.yui.debug_draw then
-        love.graphics.setColor(222, 36, 36)
-        love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
-    end
-
-    love.graphics.setColor(222, 222, 222)
-    local font = love.graphics.getFont()
-    love.graphics.setFont(self.font)
-    love.graphics.print(self.text, self.x + self.font:getWidth(self.icon .. '  '), self.y + math.floor(self.parent.size*0.7/2))
-    love.graphics.setColor(84, 84, 84)
-    love.graphics.rectangle('line', self.x, self.y + self.h/4, 2*self.h/4, 2*self.h/4, self.w/32, self.w/32)
-    love.graphics.rectangle('fill', self.x, self.y + self.h/4, 2*self.h/4, 2*self.h/4, self.w/32, self.w/32)
-    love.graphics.setColor(75, 194, 244, self.check_alpha)
-    if self.check_draw then love.graphics.print(self.icon, self.x + self.parent.size/20, self.y + math.floor(self.parent.size*0.7/2) - self.parent.size/18) end
-    love.graphics.setFont(font)
-    love.graphics.setColor(255, 255, 255)
-end
-
 -- Button
 YaouiTheme.Button = {}
 YaouiTheme.Button.new = function(self)
@@ -96,6 +60,57 @@ YaouiTheme.Button.draw = function(self)
     love.graphics.setColor(255, 255, 255)
 end
 
+-- Checkbox
+YaouiTheme.Checkbox = {}
+YaouiTheme.Checkbox.new = function(self)
+    self.check_alpha = 255
+    self.check_draw = false
+    self.timer = self.yui.Timer()
+end
+
+YaouiTheme.Checkbox.update = function(self, dt)
+    self.timer:update(dt)
+end
+
+YaouiTheme.Checkbox.draw = function(self)
+    if self.checked_enter then 
+        self.check_alpha = 255
+        self.check_draw = true
+    elseif self.checked_exit then self.timer:tween('check', 0.15, self, {check_alpha = 0}, 'linear', function() self.check_draw = false end) end
+
+    if self.yui.debug_draw then
+        love.graphics.setColor(222, 36, 36)
+        love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    end
+
+    love.graphics.setColor(222, 222, 222)
+    local font = love.graphics.getFont()
+    love.graphics.setFont(self.font)
+    love.graphics.print(self.text, self.x + self.font:getWidth(self.icon .. '  '), self.y + math.floor(self.parent.size*0.7/2))
+    love.graphics.setColor(84, 84, 84)
+    love.graphics.rectangle('line', self.x, self.y + self.h/4, 2*self.h/4, 2*self.h/4, self.w/32, self.w/32)
+    love.graphics.rectangle('fill', self.x, self.y + self.h/4, 2*self.h/4, 2*self.h/4, self.w/32, self.w/32)
+    love.graphics.setColor(75, 194, 244, self.check_alpha)
+    if self.check_draw then love.graphics.print(self.icon, self.x + self.parent.size/20, self.y + math.floor(self.parent.size*0.7/2) - self.parent.size/18) end
+    love.graphics.setFont(font)
+    love.graphics.setColor(255, 255, 255)
+end
+
+-- HorizontalSeparator
+YaouiTheme.HorizontalSeparator = {}
+YaouiTheme.HorizontalSeparator.draw = function(self)
+    if self.yui.debug_draw then
+        love.graphics.setColor(222, 36, 36)
+        love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    end
+
+    love.graphics.setColor(160, 160, 160)
+    love.graphics.setLineStyle('rough')
+    love.graphics.line(self.x + self.margin_left, self.y + self.size/2, self.x + self.w - self.margin_left - self.margin_right, self.y + self.size/2)
+    love.graphics.setLineStyle('smooth')
+    love.graphics.setColor(255, 255, 255)
+end
+
 -- IconButton
 YaouiTheme.IconButton = {}
 YaouiTheme.IconButton.new = function(self)
@@ -127,6 +142,11 @@ end
 -- Text
 YaouiTheme.Text = {}
 YaouiTheme.Text.draw = function(self)
+    if self.yui.debug_draw then
+        love.graphics.setColor(222, 36, 36)
+        love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    end
+
     love.graphics.setColor(222, 222, 222)
     local font = love.graphics.getFont()
     love.graphics.setFont(self.font)
