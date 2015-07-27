@@ -4,6 +4,7 @@ local YaouiTheme = {}
 YaouiTheme.font_awesome = require(yaoui_path .. '.FontAwesome')
 YaouiTheme.font_awesome_path = yaoui_path .. '/fonts/fontawesome-webfont.ttf'
 YaouiTheme.open_sans_regular = yaoui_path .. '/fonts/OpenSans-Regular.ttf'
+YaouiTheme.open_sans_bold = yaoui_path .. '/fonts/OpenSans-Bold.ttf'
 YaouiTheme.open_sans_semibold = yaoui_path .. '/fonts/OpenSans-Semibold.ttf'
 YaouiTheme.hand_cursor = love.mouse.getSystemCursor("hand")
 
@@ -92,6 +93,119 @@ YaouiTheme.Checkbox.draw = function(self)
     love.graphics.rectangle('fill', self.x, self.y + self.h/4, 2*self.h/4, 2*self.h/4, self.w/32, self.w/32)
     love.graphics.setColor(75, 194, 244, self.check_alpha)
     if self.check_draw then love.graphics.print(self.icon, self.x + self.parent.size/20, self.y + math.floor(self.parent.size*0.7/2) - self.parent.size/18) end
+    love.graphics.setFont(font)
+    love.graphics.setColor(255, 255, 255)
+end
+
+-- Dropdown
+YaouiTheme.Dropdown = {}
+YaouiTheme.Dropdown.new = function(self)
+
+end
+
+YaouiTheme.Dropdown.update = function(self, dt)
+
+end
+
+YaouiTheme.Dropdown.draw = function(self)
+    if self.yui.debug_draw then
+        love.graphics.setColor(222, 36, 36)
+        love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    end
+    
+    local text_color = {188, 190, 192}
+    if self.hot then text_color = {255, 255, 255} end
+
+    love.graphics.setColor(unpack(text_color))
+    local font = love.graphics.getFont()
+    love.graphics.setFont(self.font)
+    love.graphics.print(self.title .. '   ', self.x, self.y + math.floor(self.parent.size*0.7/2))
+    love.graphics.setColor(43, 110, 210)
+    love.graphics.print(self.parent.options[self.parent.current_option] .. ' ', 
+                        self.x + self.font:getWidth(self.title .. '   '), 
+                        self.y + math.floor(self.parent.size*0.7/2))
+    love.graphics.setColor(unpack(text_color))
+    love.graphics.print(self.icon, 
+                        self.x + self.font:getWidth(self.title .. '   ' .. self.parent.options[self.parent.current_option] .. ' '), 
+                        self.y + math.floor(self.parent.size*0.7/2.5))
+    love.graphics.setFont(font)
+    love.graphics.setColor(255, 255, 255)
+end
+
+YaouiTheme.DropdownScrollarea = {}
+YaouiTheme.DropdownScrollarea.draw = function(self)
+    -- Draw scrollarea frame
+    love.graphics.setColor(32, 32, 32, 220)
+    love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
+
+    -- Draw scrollbars background
+    love.graphics.setScissor()
+    love.graphics.setColor(128, 131, 135, 255)
+    if self.show_scrollbars then
+        if self.vertical_scrolling then
+            love.graphics.rectangle('fill', 
+                                    self.x + self.area_width,
+                                    self.y + self.scroll_button_height,
+                                    self.scroll_button_width,
+                                    self.area_height - 2*self.scroll_button_height)
+        end
+        if self.horizontal_scrolling then
+            love.graphics.rectangle('fill', 
+                                    self.x + self.scroll_button_width,
+                                    self.y + self.area_height,
+                                    self.area_width - 2*self.scroll_button_width,
+                                    self.scroll_button_height)
+        end
+    end
+end
+
+YaouiTheme.DropdownButton = {}
+YaouiTheme.DropdownButton.new = function(self)
+    self.timer = self.yui.Timer()
+    self.add_x = 0
+    self.alpha = 220 
+    self.draw_bg = false
+end
+
+YaouiTheme.DropdownButton.update = function(self, dt)
+    self.timer:update(dt)
+end
+
+YaouiTheme.DropdownButton.draw = function(self)
+    if self.dropdown_selected then
+        love.graphics.setColor(20, 32, 48, 220)
+        love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
+    elseif self.draw_bg then
+        love.graphics.setColor(20, 32, 48, self.alpha)
+        love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
+    end
+
+    if self.enter then 
+        self.draw_bg = true
+        self.timer:tween('add_x', 0.2, self, {add_x = self.size/4}, 'in-out-cubic') 
+        self.timer:tween('bg', 0.1, self, {alpha = 220}, 'linear')
+    end
+    if self.exit then 
+        self.timer:tween('add_x', 0.1, self, {add_x = 0}, 'in-out-cubic') 
+        self.timer:tween('bg', 0.1, self, {alpha = 0}, 'linear', function() self.draw_bg = false end) 
+    end
+
+    if self.hot then
+        love.graphics.setColor(43, 110, 210)
+        love.graphics.rectangle('fill', self.x, self.y, self.add_x, self.h)
+    end
+
+    if self.dropdown_selected then
+        self.add_x = self.size/4
+        love.graphics.setColor(188, 190, 192)
+        love.graphics.rectangle('fill', self.x, self.y, self.size/4, self.h)
+    end
+
+    if self.hot or self.dropdown_selected then love.graphics.setColor(255, 255, 255)
+    else love.graphics.setColor(188, 190, 192) end
+    local font = love.graphics.getFont()
+    love.graphics.setFont(self.font)
+    love.graphics.print(self.text, self.x + self.size + self.add_x, self.y + math.floor(self.size*0.65/2))
     love.graphics.setFont(font)
     love.graphics.setColor(255, 255, 255)
 end

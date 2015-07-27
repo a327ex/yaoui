@@ -4,6 +4,7 @@ local HorizontalSeparator = Object:extend('HorizontalSeparator')
 
 function HorizontalSeparator:new(yui, settings)
     self.yui = yui
+    self.name = settings.name
     self.x, self.y = 0, 0
     self.size = settings.size or 20
     self.w, self.h = settings.w, self.size

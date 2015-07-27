@@ -5,6 +5,7 @@ local Checkbox = Object:extend('Checkbox')
 function Checkbox:new(yui, settings)
     self.yui = yui
     self.x, self.y = 0, 0
+    self.name = settings.name
     self.size = settings.size or 20
     self.checked = settings.checked
     self.text = settings.text
