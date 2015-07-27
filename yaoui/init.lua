@@ -26,5 +26,7 @@ local IconButton = require(yaoui_path .. 'IconButton')
 yaoui.IconButton = function(...) return IconButton(yaoui, ...) end
 local Text = require(yaoui_path .. 'Text')
 yaoui.Text = function(...) return Text(yaoui, ...) end
+local Textinput = require(yaoui_path .. 'Textinput')
+yaoui.Textinput = function(...) return Textinput(yaoui, ...) end
 
 return yaoui

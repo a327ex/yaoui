@@ -16,6 +16,7 @@ function love.load()
                           current_option = 1, size = 20, onSelect = function(self, option) print(option) end}),
             yui.FlatDropdown({title = 'Dropdown', options = {'Drop', 'Dropdown', 'Super Dropdown', 'Steam', 'Skype'}, 
                               current_option = 1, size = 20, onSelect = function(self, option) print(option) end}),
+            yui.Textinput({}), 
         })
     })
 end

@@ -76,6 +76,11 @@ function FlatDropdown:update(dt)
         else element.dropdown_selected = false end
     end
 
+    if self.main_button.input:pressed('left-click') and not any_hot then
+        self.show_dropdown = false
+        self.down_area:update(0)
+    end
+
     for i, element in ipairs(self.down_area.elements) do
         if any_hot then element.dropdown_selected = false end
     end

@@ -61,7 +61,10 @@ function Dropdown:update(dt)
     if self.drop_up then self.down_area.ix, self.down_area.iy = self.x, self.y - self.down_area.h
     else self.down_area.ix, self.down_area.iy = self.x, self.y + self.h end
 
+    local any_hot = false
+    if self.main_button.hot then any_hot = true end
     for i, element in ipairs(self.down_area.elements) do
+        if element.hot then any_hot = true end
         if element.released and element.hot then 
             self.current_option = i 
             self.show_dropdown = false
@@ -77,6 +80,11 @@ function Dropdown:update(dt)
             self.main_button.w = self.w
             self.down_area:update(0)
         end
+    end
+
+    if self.main_button.input:pressed('left-click') and not any_hot then 
+        self.show_dropdown = false
+        self.down_area:update(0)
     end
 
     if self.main_button.pressed then self.show_dropdown = not self.show_dropdown end
