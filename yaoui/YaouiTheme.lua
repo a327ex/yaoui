@@ -99,14 +99,6 @@ end
 
 -- Dropdown
 YaouiTheme.Dropdown = {}
-YaouiTheme.Dropdown.new = function(self)
-
-end
-
-YaouiTheme.Dropdown.update = function(self, dt)
-
-end
-
 YaouiTheme.Dropdown.draw = function(self)
     if self.yui.debug_draw then
         love.graphics.setColor(222, 36, 36)
@@ -206,6 +198,84 @@ YaouiTheme.DropdownButton.draw = function(self)
     local font = love.graphics.getFont()
     love.graphics.setFont(self.font)
     love.graphics.print(self.text, self.x + self.size + self.add_x, self.y + math.floor(self.size*0.65/2))
+    love.graphics.setFont(font)
+    love.graphics.setColor(255, 255, 255)
+end
+
+-- FlatDropdown
+YaouiTheme.FlatDropdown = {}
+YaouiTheme.FlatDropdown.draw = function(self)
+    if self.yui.debug_draw then
+        love.graphics.setColor(222, 36, 36)
+        love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    end
+
+    love.graphics.setColor(57, 59, 61)
+    love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
+    
+    love.graphics.setColor(222, 222, 222)
+    local font = love.graphics.getFont()
+    love.graphics.setFont(self.font)
+    love.graphics.print(self.parent.options[self.parent.current_option] .. ' ', 
+                        self.x + self.parent.size/3, 
+                        self.y + math.floor(self.parent.size*0.7/2) - self.parent.size/20)
+    love.graphics.print(self.icon, 
+                        self.x + self.w - self.parent.size/3 - self.font:getWidth(self.icon), 
+                        self.y + math.floor(self.parent.size*0.7/2.5) - self.parent.size/20)
+    love.graphics.setFont(font)
+    love.graphics.setColor(255, 255, 255)
+end
+
+YaouiTheme.FlatDropdownScrollarea = {}
+YaouiTheme.FlatDropdownScrollarea.draw = function(self)
+    love.graphics.setLineStyle('rough')
+    -- Draw scrollarea frame
+    love.graphics.setColor(57, 59, 61, 255)
+    love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
+    love.graphics.setColor(127, 157, 185, 255)
+    love.graphics.rectangle('line', self.x + 1, self.y, self.w - 2, self.h)
+
+    -- Draw scrollbars background
+    love.graphics.setScissor()
+    love.graphics.setColor(128, 131, 135, 255)
+    if self.show_scrollbars then
+        if self.vertical_scrolling then
+            love.graphics.rectangle('fill', 
+                                    self.x + self.area_width,
+                                    self.y + self.scroll_button_height,
+                                    self.scroll_button_width,
+                                    self.area_height - 2*self.scroll_button_height)
+        end
+        if self.horizontal_scrolling then
+            love.graphics.rectangle('fill', 
+                                    self.x + self.scroll_button_width,
+                                    self.y + self.area_height,
+                                    self.area_width - 2*self.scroll_button_width,
+                                    self.scroll_button_height)
+        end
+    end
+    love.graphics.setLineStyle('smooth')
+end
+
+YaouiTheme.FlatDropdownButton = {}
+YaouiTheme.FlatDropdownButton.draw = function(self)
+    love.graphics.setLineStyle('rough')
+    if self.dropdown_selected then
+        love.graphics.setColor(30, 144, 255)
+        love.graphics.rectangle('fill', self.x + 1, self.y, self.w - 3, self.h)
+    end
+
+    if self.hot then
+        love.graphics.setColor(30, 144, 255)
+        love.graphics.rectangle('fill', self.x + 1, self.y, self.w - 3, self.h)
+    end
+    love.graphics.setLineStyle('smooth')
+
+    if self.hot or self.dropdown_selected then love.graphics.setColor(255, 255, 255)
+    else love.graphics.setColor(188, 190, 192) end
+    local font = love.graphics.getFont()
+    love.graphics.setFont(self.font)
+    love.graphics.print(self.text, self.x + self.parent.size/3, self.y)
     love.graphics.setFont(font)
     love.graphics.setColor(255, 255, 255)
 end

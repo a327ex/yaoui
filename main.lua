@@ -12,7 +12,10 @@ function love.load()
             yui.Checkbox({text = 'Checkbox', size = 20}),
             yui.Text({text = 'Text', size = 20}),
             yui.HorizontalSeparator({w = 100}),
-            yui.Dropdown({title = 'Dropdown', options = {'Drop', 'Dropdown', 'Super Dropdown', 'Steam', 'Skype', 'Really really really really long option'}, current_option = 1, size = 20}),
+            yui.Dropdown({title = 'Dropdown', options = {'Drop', 'Dropdown', 'Super Dropdown', 'Steam', 'Skype'}, 
+                          current_option = 1, size = 20, onSelect = function(self, option) print(option) end}),
+            yui.FlatDropdown({title = 'Dropdown', options = {'Drop', 'Dropdown', 'Super Dropdown', 'Steam', 'Skype'}, 
+                              current_option = 1, size = 20, onSelect = function(self, option) print(option) end}),
         })
     })
 end
