@@ -2,8 +2,9 @@
 --proc/filedialogs: standard open and save file dialogs.
 --Written by Cosmin Apreutesei. Public Domain.
 
-setfenv(1, require'winapi')
-require'winapi.comdlg'
+local yui_path = (...):match('(.-)[^%.]+$')
+setfenv(1, require(yui_path:sub(1, -2)))
+require(yui_path .. 'winapi.comdlg')
 
 OFN_READONLY                 = 0x00000001
 OFN_OVERWRITEPROMPT          = 0x00000002

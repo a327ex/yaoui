@@ -2,8 +2,9 @@
 --proc/colorchooser: color chooser dialog.
 --Written by Cosmin Apreutesei. Public Domain.
 
-setfenv(1, require'winapi')
-require'winapi.comdlg'
+local yui_path = (...):match('(.-)[^%.]+$')
+setfenv(1, require(yui_path:sub(1, -2)))
+require(yui_path .. 'comdlg')
 
 ffi.cdef[[
 typedef UINT_PTR (__stdcall *LPCCHOOKPROC)(HWND, UINT, WPARAM, LPARAM);

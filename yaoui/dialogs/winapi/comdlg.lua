@@ -3,7 +3,7 @@
 --Written by Cosmin Apreutesei. Public Domain.
 
 local yui_path = (...):match('(.-)[^%.]+$')
-setfenv(1, require(yui_path .. 'winapi'))
+setfenv(1, require(yui_path:sub(1, -2)))
 require(yui_path .. 'winuser')
 
 comdlg = ffi.load'comdlg32'
