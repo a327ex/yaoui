@@ -26,6 +26,16 @@ yaoui.openSaveDialog = function(title, filter, filter_index, flags)
     if ok then return info.filepath, info.filename, info.filter_index end
 end
 
+yaoui.openOpenDialog = function(title, filter, filter_index, flags)
+    local ok, info = yaoui.winapi.GetOpenFileName({
+        title = title,
+        filter = filter,
+        filter_index = filter_index,
+        flags = flags or 'OFN_ALLOWMULTISELECT|OFN_EXPLORER|OFN_ENABLESIZING|OFN_FORCESHOWHIDDEN'
+    })
+    if ok then return info.filepath, info.filename, info.filter_index end
+end
+
 local View = require(yaoui_path .. 'View')
 yaoui.View = function(...) return View(yaoui, ...) end
 local Stack = require(yaoui_path .. 'Stack')

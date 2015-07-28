@@ -26,7 +26,8 @@ function love.load()
             yui.IconButton({icon = 'fa-close', hover = 'Close', size = 40, onClick = function(self) print(1) end}),
             yui.Button({size = 60, hover = 'Button', icon = 'fa-check', icon_right = true, text = 'Button', onClick = function(self) 
                 -- yui.openColorPicker()
-                yui.openSaveDialog('Save', {'All files', '*.*'}, 1)
+                -- yui.openSaveDialog('Save', {'All files', '*.*'}, 1)
+                yui.openOpenDialog('Open', {'All files', '*.*'}, 1)
             end}),
         })
     })
