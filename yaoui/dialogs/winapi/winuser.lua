@@ -2,7 +2,8 @@
 --proc/winuser: winuser types and macros from multiple headers.
 --Written by Cosmin Apreutesei. Public Domain.
 
-setfenv(1, require'winapi')
+local yui_path = (...):match('(.-)[^%.]+$')
+setfenv(1, require(yui_path .. 'winapi'))
 
 --constants
 

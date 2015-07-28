@@ -2,7 +2,8 @@
 --core/debug: strict mode and some debug tools. entirely optional module.
 --Written by Cosmin Apreutesei. Public Domain.
 
-setfenv(1, require'winapi.namespace')
+local yui_path = (...):match('(.-)[^%.]+$')
+setfenv(1, require(yui_path .. 'namespace'))
 
 --disable stdout buffering so we can print-debug stuff
 io.stdout:setvbuf'no'

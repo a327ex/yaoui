@@ -2,8 +2,9 @@
 --ffi/bitmask: bitmask encoding and decoding.
 --Written by Cosmin Apreutesei. Public Domain.
 
-setfenv(1, require'winapi.namespace')
-require'winapi.util'
+local yui_path = (...):match('(.-)[^%.]+$')
+setfenv(1, require(yui_path .. 'namespace'))
+require(yui_path .. 'util')
 
 local bitmask_class = {}
 local bitmask_meta = {__index = bitmask_class}

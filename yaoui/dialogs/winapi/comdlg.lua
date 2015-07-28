@@ -2,8 +2,9 @@
 --proc/comdlg: common dialogs
 --Written by Cosmin Apreutesei. Public Domain.
 
-setfenv(1, require'winapi')
-require'winapi.winuser'
+local yui_path = (...):match('(.-)[^%.]+$')
+setfenv(1, require(yui_path .. 'winapi'))
+require(yui_path .. 'winuser')
 
 comdlg = ffi.load'comdlg32'
 

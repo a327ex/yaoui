@@ -2,8 +2,9 @@
 --ffi/util: filters and conversion functions for winapi args and return-values.
 --Written by Cosmin Apreutesei. Public Domain.
 
-setfenv(1, require'winapi.namespace')
-require'winapi.types'
+local yui_path = (...):match('(.-)[^%.]+$')
+setfenv(1, require(yui_path .. 'namespace'))
+require(yui_path .. 'types')
 
 --ffi, bit, C ----------------------------------------------------------------
 
@@ -15,7 +16,8 @@ assert(ffi.abi'win', 'platform not Windows')
 
 --glue -----------------------------------------------------------------------
 
-glue = require'glue'
+local yui_path = (...):match('(.-)[^%.]+$')
+glue = require(yui_path .. 'glue')
 
 assert       = glue.assert
 extend       = glue.extend

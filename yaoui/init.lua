@@ -4,6 +4,7 @@ local yaoui = {}
 yaoui.UI = require(yaoui_path .. 'UI')
 yaoui.Theme = require(yaoui_path .. 'YaouiTheme')
 yaoui.Timer = require(yaoui_path .. 'Timer')
+yaoui.winapi = require(yaoui_path .. 'dialogs.winapi')
 
 local View = require(yaoui_path .. 'View')
 yaoui.View = function(...) return View(yaoui, ...) end

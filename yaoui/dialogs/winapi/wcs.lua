@@ -2,9 +2,10 @@
 --ffi/wcs: utf8 to wide character string and back.
 --Written by Cosmin Apreutesei. Public Domain.
 
-setfenv(1, require'winapi.namespace')
-require'winapi.types'
-require'winapi.util'
+local yui_path = (...):match('(.-)[^%.]+$')
+setfenv(1, require(yui_path .. 'namespace'))
+require(yui_path .. 'types')
+require(yui_path .. 'util')
 
 ffi.cdef[[
 size_t wcslen(const wchar_t *str);
