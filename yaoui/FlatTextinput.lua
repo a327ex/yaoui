@@ -18,9 +18,17 @@ function FlatTextinput:new(yui, settings)
         single_line = true,
     })
     self.h = self.textarea.h
+
+    self.onEnter = settings.onEnter
 end
 
 function FlatTextinput:update(dt)
+    if self.textarea.input:pressed('enter') then
+        if self.onEnter then
+            self:onEnter(self.textarea:getText())
+        end
+    end
+
     self.textarea.x, self.textarea.y = self.x, self.y
     self.textarea.text_base_x, self.textarea.text_base_y = self.x + self.textarea.text_margin, self.y + self.textarea.text_margin
     self.textarea:update(dt)
@@ -28,6 +36,10 @@ end
 
 function FlatTextinput:draw()
     self.textarea:draw()
+end
+
+function FlatTextinput:setText(text)
+    self.textarea:setText(text)
 end
 
 return FlatTextinput

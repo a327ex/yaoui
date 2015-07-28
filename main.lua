@@ -11,7 +11,7 @@ function love.load()
 
     love.graphics.setBackgroundColor(23, 24, 27)
 
-    --yui.debug_draw = true
+    yui.debug_draw = true
 
     view = yui.View(50, 50, 200, 530, {margin_left = 4, margin_right = 4, margin_top = 4, margin_bottom = 4,
         yui.Stack({name = 'MainStack', spacing = 4,

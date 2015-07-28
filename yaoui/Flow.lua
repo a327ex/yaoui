@@ -54,7 +54,7 @@ function Flow:draw()
     end
 
     if self.yui.debug_draw then
-        love.graphics.setColor(128, 222, 222)
+        love.graphics.setColor(80, 222, 222)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
         love.graphics.setColor(255, 255, 255)
     end

@@ -29,7 +29,7 @@ YaouiTheme.Button.draw = function(self)
     end
 
     if self.yui.debug_draw then
-        love.graphics.setColor(222, 128, 128)
+        love.graphics.setColor(222, 80, 80)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
@@ -80,7 +80,7 @@ YaouiTheme.Checkbox.draw = function(self)
     elseif self.checked_exit then self.timer:tween('check', 0.15, self, {check_alpha = 0}, 'linear', function() self.check_draw = false end) end
 
     if self.yui.debug_draw then
-        love.graphics.setColor(222, 128, 128)
+        love.graphics.setColor(222, 80, 80)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
@@ -101,7 +101,7 @@ end
 YaouiTheme.Dropdown = {}
 YaouiTheme.Dropdown.draw = function(self)
     if self.yui.debug_draw then
-        love.graphics.setColor(222, 128, 128)
+        love.graphics.setColor(222, 80, 80)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
     
@@ -206,7 +206,7 @@ end
 YaouiTheme.FlatDropdown = {}
 YaouiTheme.FlatDropdown.draw = function(self)
     if self.yui.debug_draw then
-        love.graphics.setColor(222, 128, 128)
+        love.graphics.setColor(222, 80, 80)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
@@ -342,7 +342,7 @@ YaouiTheme.FlatTextinput.draw = function(self)
     love.graphics.setColor(255, 255, 255, 255)
 
     if self.yui.debug_draw then
-        love.graphics.setColor(222, 128, 128)
+        love.graphics.setColor(222, 80, 80)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
@@ -354,7 +354,7 @@ end
 YaouiTheme.HorizontalSeparator = {}
 YaouiTheme.HorizontalSeparator.draw = function(self)
     if self.yui.debug_draw then
-        love.graphics.setColor(222, 128, 128)
+        love.graphics.setColor(222, 80, 80)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
@@ -381,7 +381,7 @@ YaouiTheme.IconButton.draw = function(self)
     elseif self.exit then self.timer:tween('color', 0.25, self, {color = {unpack(self.parent.base_color)}}, 'linear') end
 
     if self.yui.debug_draw then
-        love.graphics.setColor(222, 128, 128)
+        love.graphics.setColor(222, 80, 80)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
@@ -403,7 +403,7 @@ end
 YaouiTheme.Text = {}
 YaouiTheme.Text.draw = function(self)
     if self.yui.debug_draw then
-        love.graphics.setColor(222, 128, 128)
+        love.graphics.setColor(222, 80, 80)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
@@ -477,7 +477,7 @@ YaouiTheme.Textinput.draw = function(self)
     love.graphics.setColor(255, 255, 255, 255)
 
     if self.yui.debug_draw then
-        love.graphics.setColor(222, 128, 128)
+        love.graphics.setColor(222, 80, 80)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
