@@ -9,7 +9,7 @@ function ImageButton:new(yui, settings)
     self.ix, self.iy = settings.ix or self.x, settings.iy or self.y
     self.rounded_corners = settings.rounded_corners
     self.name = settings.name
-    self.img = love.graphics.newImage(settings.image)
+    self.img = settings.image
     self.w, self.h = settings.w or self.img:getWidth(), settings.h or self.img:getHeight()
     self.button = self.yui.UI.Button(0, 0, self.w, self.h, {
         yui = self.yui,
@@ -17,7 +17,12 @@ function ImageButton:new(yui, settings)
         parent = self,
     })
     self.onClick = settings.onClick
-    self.overlay = settings.overlay
+    self.overlay = settings.overlay or function(self)
+        love.graphics.setColor(50, 50, 50, self.alpha/3)
+        if self.rounded_corners then love.graphics.rectangle('fill', self.x, self.y, self.w, self.h, self.h/18, self.h/18) 
+        else love.graphics.rectangle('fill', self.x, self.y, self.w, self.h) end
+        love.graphics.setColor(255, 255, 255, 255)
+    end
     self.alpha = 0
 
     self.hover_color = settings.hover_color or {36, 104, 204}

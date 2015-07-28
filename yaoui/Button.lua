@@ -11,6 +11,9 @@ function Button:new(yui, settings)
     self.icon_str = settings.icon
     self.icon_right = settings.icon_right
     self.icon = ''
+    self.hover = settings.hover
+    self.hover_font = love.graphics.newFont(self.yui.Theme.open_sans_light, math.floor(math.max(self.size, 40)*0.4))
+    self.base_color = settings.base_color or {204, 204, 204}
     self.original_icon = '' 
     if settings.icon then 
         self.icon = self.yui.Theme.font_awesome[settings.icon] 
