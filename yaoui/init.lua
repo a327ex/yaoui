@@ -6,13 +6,24 @@ yaoui.Theme = require(yaoui_path .. 'YaouiTheme')
 yaoui.Timer = require(yaoui_path .. 'Timer')
 yaoui.winapi = require(yaoui_path .. 'dialogs.winapi')
 yaoui.colorchooser = require(yaoui_path .. 'dialogs.winapi.colorchooser')
+yaoui.filedialogs = require(yaoui_path .. 'dialogs.winapi.filedialogs')
 
 yaoui.openColorPicker = function()
-    local cc, cust = yaoui.winapi.CHOOSECOLOR({})
+    local cc, cust = yaoui.winapi.CHOOSECOLOR({flags = 'CC_FULLOPEN'})
     cc = yaoui.winapi.ChooseColor(cc)
     local bit = require('bit')
     local r, g, b = bit.band(bit.rshift(cc.result, 0), 255), bit.band(bit.rshift(cc.result, 8), 255), bit.band(bit.rshift(cc.result, 16), 255)
-    print(r, g, b)
+    return r, g, b
+end
+
+yaoui.openSaveDialog = function(title, filter, filter_index, flags)
+    local ok, info = yaoui.winapi.GetSaveFileName({
+        title = title,
+        filter = filter,
+        filter_index = filter_index,
+        flags = flags or 'OFN_ALLOWMULTISELECT|OFN_EXPLORER|OFN_ENABLESIZING|OFN_FORCESHOWHIDDEN'
+    })
+    if ok then return info.filepath, info.filename, info.filter_index end
 end
 
 local View = require(yaoui_path .. 'View')

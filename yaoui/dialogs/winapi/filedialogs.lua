@@ -4,7 +4,7 @@
 
 local yui_path = (...):match('(.-)[^%.]+$')
 setfenv(1, require(yui_path:sub(1, -2)))
-require(yui_path .. 'winapi.comdlg')
+require(yui_path .. 'comdlg')
 
 OFN_READONLY                 = 0x00000001
 OFN_OVERWRITEPROMPT          = 0x00000002
