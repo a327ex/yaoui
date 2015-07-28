@@ -8,11 +8,14 @@ function IconButton:new(yui, settings)
     self.name = settings.name
     self.x, self.y = 0, 0
     self.w, self.h = self.size, self.size
+    self.base_color = settings.base_color or {204, 204, 204}
+    self.hover_color = settings.hover_color or {36, 104, 204}
     self.button = self.yui.UI.Button(0, 0, self.size, self.size, {
         yui = self.yui,
         extensions = {self.yui.Theme.IconButton},
         icon = self.yui.Theme.font_awesome[settings.icon], 
-        font = love.graphics.newFont(self.yui.Theme.font_awesome_path, settings.size)
+        font = love.graphics.newFont(self.yui.Theme.font_awesome_path, settings.size),
+        parent = self,
     })
     self.onClick = settings.onClick
 end

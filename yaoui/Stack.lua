@@ -44,8 +44,19 @@ function Stack:draw()
         for _, element in ipairs(self.layout.bottom) do element:draw() end
     end
 
+    for _, element in ipairs(self.layout) do
+        if element.postDraw then element:postDraw() end
+    end
+    if self.layout.bottom then 
+        for _, element in ipairs(self.layout.bottom) do 
+            if element.postDraw then element:postDraw() end
+        end
+    end
+
     if self.yui.debug_draw then
+        love.graphics.setColor(222, 128, 222)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+        love.graphics.setColor(255, 255, 255)
     end
 end
 

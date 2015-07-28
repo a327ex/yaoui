@@ -7,10 +7,9 @@ function FlatTextinput:new(yui, settings)
     self.x, self.y = 0, 0
     self.name = settings.name
     self.size = settings.size or 20
-    self.default_text = settings.default_text or ''
     self.font = love.graphics.newFont(self.yui.Theme.open_sans_regular, math.floor(self.size*0.7))
     self.w = settings.w or 100 + 2*self.size
-    self.h = self.font:getHeight() + math.floor(self.size)*0.7
+    self.h = self.font:getHeight() + math.floor(self.size*0.7)
     self.textarea = self.yui.UI.Textarea(0, 0, self.w, self.h, {
         yui = self.yui,
         font = self.font,
@@ -18,6 +17,7 @@ function FlatTextinput:new(yui, settings)
         extensions = {self.yui.Theme.FlatTextinput},
         single_line = true,
     })
+    self.h = self.textarea.h
 end
 
 function FlatTextinput:update(dt)

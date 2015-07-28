@@ -12,7 +12,7 @@ function Checkbox:new(yui, settings)
     self.icon = self.yui.Theme.font_awesome['fa-check'] 
     self.font = love.graphics.newFont(self.yui.Theme.open_sans_regular, math.floor(self.size*0.7))
     self.font:setFallbacks(love.graphics.newFont(self.yui.Theme.font_awesome_path, math.floor(self.size*0.7)))
-    self.w = self.font:getWidth(self.icon ..  self.text) + self.size
+    self.w = self.font:getWidth(self.icon .. self.text) + self.size
     self.h = self.font:getHeight() + math.floor(self.size*0.7)
     self.checkbox = self.yui.UI.Checkbox(0, 0, self.w, self.h, {
         yui = self.yui,

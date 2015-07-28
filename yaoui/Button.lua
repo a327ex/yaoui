@@ -9,15 +9,17 @@ function Button:new(yui, settings)
     self.x, self.y = 0, 0
     self.size = settings.size or 20
     self.icon_str = settings.icon
-    self.icon_position = settings.icon_position
+    self.icon_right = settings.icon_right
     self.icon = ''
+    self.original_icon = '' 
     if settings.icon then 
         self.icon = self.yui.Theme.font_awesome[settings.icon] 
         self.original_icon = self.yui.Theme.font_awesome[settings.icon] 
     end
     self.font = love.graphics.newFont(self.yui.Theme.open_sans_semibold, math.floor(self.size*0.7))
     self.font:setFallbacks(love.graphics.newFont(self.yui.Theme.font_awesome_path, math.floor(self.size*0.7)))
-    self.w = self.font:getWidth(self.text .. ' ' .. self.icon) + self.size
+    if self.icon ~= '' then self.w = self.font:getWidth(self.text .. ' ' .. self.icon) + self.size
+    else self.w = self.font:getWidth(self.text) + self.size end
     self.h = self.font:getHeight() + math.floor(self.size*0.7)
     self.button = self.yui.UI.Button(0, 0, self.w, self.h, {
         yui = self.yui,
@@ -53,16 +55,20 @@ function Button:draw()
 end
 
 function Button:setLoading()
-    self.icon = self.yui.Theme.font_awesome['fa-refresh']
-    self.button.icon = self.icon
-    self.loading = true
+    if self.icon ~= '' then
+        self.icon = self.yui.Theme.font_awesome['fa-refresh']
+        self.button.icon = self.icon
+        self.loading = true
+    end
 end
 
 function Button:unsetLoading()
-    self.icon = self.yui.Theme.font_awesome[self.icon_str]
-    self.button.icon = self.icon
-    self.icon_r = 0
-    self.loading = false
+    if self.icon ~= '' then
+        self.icon = self.yui.Theme.font_awesome[self.icon_str]
+        self.button.icon = self.icon
+        self.icon_r = 0
+        self.loading = false
+    end
 end
 
 return Button

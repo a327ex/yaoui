@@ -70,6 +70,7 @@ function FlatDropdown:update(dt)
     if self.main_button.pressed then self.show_dropdown = not self.show_dropdown end
 
     local any_hot = false
+    if self.main_button.hot then any_hot = true end
     for i, element in ipairs(self.down_area.elements) do 
         if element.hot then any_hot = true end
         if i == self.current_option then element.dropdown_selected = true
@@ -87,10 +88,16 @@ function FlatDropdown:update(dt)
 
     self.main_button:update(dt)
     if self.show_dropdown then self.down_area:update(dt) end
+
+    if self.main_button.enter then love.mouse.setCursor(self.yui.Theme.hand_cursor) end
+    if self.main_button.exit then love.mouse.setCursor() end
 end
 
 function FlatDropdown:draw()
     self.main_button:draw()
+end
+
+function FlatDropdown:postDraw()
     if self.show_dropdown then self.down_area:draw() end
 end
 

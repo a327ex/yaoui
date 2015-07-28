@@ -96,10 +96,16 @@ function Dropdown:update(dt)
 
     self.main_button:update(dt)
     if self.show_dropdown then self.down_area:update(dt) end
+
+    if self.main_button.enter then love.mouse.setCursor(self.yui.Theme.hand_cursor) end
+    if self.main_button.exit then love.mouse.setCursor() end
 end
 
 function Dropdown:draw()
     self.main_button:draw()
+end
+
+function Dropdown:postDraw()
     if self.show_dropdown then self.down_area:draw() end
 end
 

@@ -44,8 +44,19 @@ function Flow:draw()
         for _, element in ipairs(self.layout.right) do element:draw() end
     end
 
+    for _, element in ipairs(self.layout) do
+        if element.postDraw then element:postDraw() end
+    end
+    if self.layout.right then 
+        for _, element in ipairs(self.layout.right) do 
+            if element.postDraw then element:postDraw() end
+        end
+    end
+
     if self.yui.debug_draw then
+        love.graphics.setColor(128, 222, 222)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+        love.graphics.setColor(255, 255, 255)
     end
 end
 
