@@ -280,6 +280,70 @@ YaouiTheme.FlatDropdownButton.draw = function(self)
     love.graphics.setColor(255, 255, 255)
 end
 
+-- FlatTextinput
+YaouiTheme.FlatTextinput = {}
+YaouiTheme.FlatTextinput.draw = function(self)
+    love.graphics.setLineStyle('rough')
+
+    local font = love.graphics.getFont()
+    love.graphics.setFont(self.font)
+
+    -- Draw textinput background
+    love.graphics.setColor(57, 59, 61)
+    love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
+
+    -- Draw selected text with inverted color and blue selection background
+    if self.selection_index and self.index ~= self.selection_index then
+        love.graphics.setColor(198, 198, 198)
+        self.text:draw()
+
+        if self.selected then
+            love.graphics.setColor(51, 153, 255)
+            for i, _ in ipairs(self.selection_positions) do
+                love.graphics.rectangle('fill', self.selection_positions[i].x, self.selection_positions[i].y, self.selection_sizes[i].w, self.selection_sizes[i].h)
+            end
+
+            love.graphics.setColor(255, 255, 255)
+            if love_version == '0.9.1' or love_version == '0.9.2' then
+                for i, _ in ipairs(self.selection_positions) do
+                    love.graphics.setStencil(function() 
+                        love.graphics.rectangle('fill', self.selection_positions[i].x, self.selection_positions[i].y, self.selection_sizes[i].w, self.selection_sizes[i].h)
+                    end)
+                    self.text:draw()
+                    love.graphics.setStencil()
+                end
+            else
+                for i, _ in ipairs(self.selection_positions) do
+                    love.graphics.stencil(function() 
+                        love.graphics.rectangle('fill', self.selection_positions[i].x, self.selection_positions[i].y, self.selection_sizes[i].w, self.selection_sizes[i].h)
+                    end)
+                    love.graphics.setStencilTest(true)
+                    self.text:draw()
+                    love.graphics.setStencilTest(false)
+                end
+            end
+        end
+
+    -- Draw text normally + cursor
+    else
+        love.graphics.setColor(198, 198, 198)
+        self.text:draw()
+
+        if self.selected and self.cursor_visible then 
+            love.graphics.setColor(198, 198, 198)
+            for i, _ in ipairs(self.selection_positions) do
+                love.graphics.line(self.selection_positions[i].x, self.selection_positions[i].y, 
+                self.selection_positions[i].x, self.selection_positions[i].y + self.selection_sizes[i].h)
+            end
+        end
+    end
+
+    love.graphics.setLineStyle('smooth')
+    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.setFont(font)
+    love.graphics.setColor(255, 255, 255)
+end
+
 -- HorizontalSeparator
 YaouiTheme.HorizontalSeparator = {}
 YaouiTheme.HorizontalSeparator.draw = function(self)
