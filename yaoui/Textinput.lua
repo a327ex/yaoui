@@ -33,6 +33,9 @@ function Textinput:update(dt)
     self.h = self.textarea.h
     self.textarea.text_base_x, self.textarea.text_base_y = self.x + self.textarea.text_margin, self.y + self.textarea.text_margin
     self.textarea:update(dt)
+
+    if self.textarea.enter then love.mouse.setCursor(self.yui.Theme.ibeam) end
+    if self.textarea.exit then love.mouse.setCursor() end
 end
 
 function Textinput:draw()

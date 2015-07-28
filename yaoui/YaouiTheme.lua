@@ -7,6 +7,7 @@ YaouiTheme.open_sans_regular = yaoui_path .. '/fonts/OpenSans-Regular.ttf'
 YaouiTheme.open_sans_bold = yaoui_path .. '/fonts/OpenSans-Bold.ttf'
 YaouiTheme.open_sans_semibold = yaoui_path .. '/fonts/OpenSans-Semibold.ttf'
 YaouiTheme.hand_cursor = love.mouse.getSystemCursor("hand")
+YaouiTheme.ibeam = love.mouse.getSystemCursor("ibeam")
 
 -- Button
 YaouiTheme.Button = {}
@@ -395,8 +396,35 @@ end
 
 -- ImageButton
 YaouiTheme.ImageButton = {}
-YaouiTheme.ImageButton.draw = function(self)
+YaouiTheme.ImageButton.new = function(self)
+    self.alpha = 0
+    self.timer = self.yui.Timer()
+end
 
+YaouiTheme.ImageButton.update = function(self, dt)
+    self.timer:update(dt)
+end
+
+YaouiTheme.ImageButton.draw = function(self)
+    if self.enter then self.timer:tween('alpha', 0.1, self, {alpha = 255}, 'linear')
+    elseif self.exit then self.timer:tween('alpha', 0.1, self, {alpha = 0}, 'linear') end
+
+    love.graphics.stencil(function()
+        if self.rounded_corners then love.graphics.rectangle('fill', self.x, self.y, self.w, self.h, self.w/64, self.w/64)
+        else love.graphics.rectangle('fill', self.x, self.y, self.w, self.h) end
+    end)
+    love.graphics.setStencilTest(true)
+    love.graphics.draw(self.parent.img, self.x - self.parent.ix, self.y - self.parent.iy)
+    love.graphics.setStencilTest(false)
+
+    if self.parent.overlay then self.parent.overlay(self.parent) end
+
+    love.graphics.setLineWidth(2.5)
+    local r, g, b = unpack(self.parent.hover_color)
+    love.graphics.setColor(r, g, b, self.alpha)
+    love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    love.graphics.setColor(255, 255, 255, 255)
+    love.graphics.setLineWidth(1)
 end
 
 -- Text
@@ -425,7 +453,7 @@ YaouiTheme.Textinput.draw = function(self)
 
     -- Draw textinput background
     love.graphics.setColor(12, 12, 12)
-    love.graphics.rectangle('fill', self.x, self.y, self.w, self.h, self.w/20, self.w/20)
+    love.graphics.rectangle('fill', self.x, self.y, self.w, self.h, self.h/4, self.h/4)
 
     -- Draw selected text with inverted color and blue selection background
     if self.selection_index and self.index ~= self.selection_index then

@@ -52,6 +52,8 @@ function Dropdown:new(yui, settings)
     end
 
     self.onSelect = settings.onSelect
+    self.onWidthChange = settings.onWidthChange
+    self.w = self.main_button.w
 end
 
 function Dropdown:update(dt)
@@ -79,6 +81,7 @@ function Dropdown:update(dt)
             self.w = self.font:getWidth(self.title .. '   ' .. self.options[self.current_option] .. ' ' .. self.icon) + 2*self.size
             self.main_button.w = self.w
             self.down_area:update(0)
+            if self.onWidthChange then self:onWidthChange() end
         end
     end
 
