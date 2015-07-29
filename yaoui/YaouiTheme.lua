@@ -1,6 +1,43 @@
 local yaoui_path = (...):sub(1, -12)
 local YaouiTheme = {}
 
+YaouiTheme.colors = {
+    hover_bg = {12, 12, 12},
+    hover_text = {204, 204, 204},
+
+    text_dark = {188, 190, 192},
+    text = {222, 222, 222},
+    text_light = {255, 255, 255},
+
+    button_primary = {31, 55, 95},
+    button_hot = {34, 86, 148},
+    button_pressed = {34, 104, 204},
+    button_loading_icon = {45, 117, 223},
+
+    checkbox_bg = {84, 84, 84},
+    checkbox_v = {75, 194, 244},
+
+    dropdown_primary = {43, 110, 210},
+    dropdown_area_bg = {32, 32, 32},
+    dropdown_button_selected_bg = {20, 32, 48},
+
+    flat_dropdown_bg = {57, 59, 61},
+    flat_dropdown_outline = {127, 157, 185},
+    flat_dropdown_button_selected_bg = {30, 144, 255},
+
+    flat_textinput_bg = {57, 59, 61},
+    flat_textinput_selected_text_bg = {51, 153, 255},
+
+    separator = {160, 160, 160},
+
+    icon_button_primary = {204, 204, 204},
+    icon_button_hover = {36, 104, 204},
+    image_button_primary = {36, 104, 204},
+    tab_primary = {36, 104, 204},
+
+    textinput_bg = {12, 12, 12},
+}
+
 YaouiTheme.font_awesome = require(yaoui_path .. '.FontAwesome')
 YaouiTheme.font_awesome_path = yaoui_path .. '/fonts/fontawesome-webfont.ttf'
 YaouiTheme.open_sans_regular = yaoui_path .. '/fonts/OpenSans-Regular.ttf'
@@ -9,9 +46,6 @@ YaouiTheme.open_sans_bold = yaoui_path .. '/fonts/OpenSans-Bold.ttf'
 YaouiTheme.open_sans_semibold = yaoui_path .. '/fonts/OpenSans-Semibold.ttf'
 YaouiTheme.hand_cursor = love.mouse.getSystemCursor("hand")
 YaouiTheme.ibeam = love.mouse.getSystemCursor("ibeam")
-YaouiTheme.colors = {
-
-}
 
 -- Button
 YaouiTheme.Button = {}
