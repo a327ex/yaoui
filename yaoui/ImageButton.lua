@@ -24,8 +24,6 @@ function ImageButton:new(yui, settings)
         love.graphics.setColor(255, 255, 255, 255)
     end
     self.alpha = 0
-
-    self.hover_color = settings.hover_color or {36, 104, 204}
 end
 
 function ImageButton:update(dt)

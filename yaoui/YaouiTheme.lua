@@ -32,10 +32,13 @@ YaouiTheme.colors = {
 
     icon_button_primary = {204, 204, 204},
     icon_button_hover = {36, 104, 204},
+
     image_button_primary = {36, 104, 204},
+
     tab_primary = {36, 104, 204},
 
     textinput_bg = {12, 12, 12},
+    textinput_selected_text_bg = {51, 153, 255},
 }
 
 YaouiTheme.font_awesome = require(yaoui_path .. '.FontAwesome')
@@ -50,7 +53,7 @@ YaouiTheme.ibeam = love.mouse.getSystemCursor("ibeam")
 -- Button
 YaouiTheme.Button = {}
 YaouiTheme.Button.new = function(self)
-    self.color = {31, 55, 95}
+    self.color = {unpack(self.yui.Theme.colors.button_primary)}
     self.timer = self.yui.Timer()
     self.hover_alpha = 0
 end
@@ -72,12 +75,12 @@ YaouiTheme.Button.update = function(self, dt)
 end
 
 YaouiTheme.Button.draw = function(self)
-    if self.enter then self.timer:tween('color', 0.25, self, {color = {34, 86, 148}}, 'linear')
-    elseif self.exit then self.timer:tween('color', 0.25, self, {color = {31, 55, 95}}, 'linear')
-    elseif self.hot and self.pressed then self.timer:tween('color', 0.1, self, {color = {36, 104, 204}}, 'linear')
+    if self.enter then self.timer:tween('color', 0.25, self, {color = {unpack(self.yui.Theme.colors.button_hot)}}, 'linear')
+    elseif self.exit then self.timer:tween('color', 0.25, self, {color = {unpack(self.yui.Theme.colors.button_primary)}}, 'linear')
+    elseif self.hot and self.pressed then self.timer:tween('color', 0.1, self, {color = {unpack(self.yui.Theme.colors.button_pressed)}}, 'linear')
     elseif self.released then 
-        if self.hot then self.timer:tween('color', 0.2, self, {color = {34, 86, 148}}, 'linear')
-        else self.timer:tween('color', 0.2, self, {color = {31, 55, 95}}, 'linear') end
+        if self.hot then self.timer:tween('color', 0.2, self, {color = {unpack(self.yui.Theme.colors.button_hot)}}, 'linear')
+        else self.timer:tween('color', 0.2, self, {color = {unpack(self.yui.Theme.colors.button_primary)}}, 'linear') end
     end
 
     if self.yui.debug_draw then
@@ -86,14 +89,15 @@ YaouiTheme.Button.draw = function(self)
     end
 
     if self.parent.hover then
-        love.graphics.setColor(12, 12, 12, self.hover_alpha)
+        local r, g, b = unpack(self.yui.Theme.colors.hover_bg)
+        love.graphics.setColor(r, g, b, self.hover_alpha)
         love.graphics.rectangle('fill', 
                                 self.x + self.w/2 - (self.parent.hover_font:getWidth(self.parent.hover) + math.max(self.parent.size, 40)/4)/2, 
                                 self.y - math.max(self.parent.size, 40)/1.5,
                                 self.parent.hover_font:getWidth(self.parent.hover) + math.max(self.parent.size, 40)/4, 
                                 self.parent.hover_font:getHeight(), self.h/16, self.h/16)
 
-        local r, g, b = unpack(self.parent.base_color)
+        local r, g, b = unpack(self.yui.Theme.colors.hover_text)
         love.graphics.setColor(r, g, b, self.hover_alpha)
         local font = love.graphics.getFont()
         love.graphics.setFont(self.parent.hover_font)
@@ -104,23 +108,23 @@ YaouiTheme.Button.draw = function(self)
     love.graphics.rectangle('line', self.x, self.y, self.w, self.h, self.w/16, self.w/16)
     love.graphics.rectangle('fill', self.x, self.y, self.w, self.h, self.w/16, self.w/16)
 
-    love.graphics.setColor(222, 222, 222)
+    love.graphics.setColor(unpack(self.yui.Theme.colors.text))
     local font = love.graphics.getFont()
     love.graphics.setFont(self.font)
     if self.icon then
         if self.parent.icon_right then
-            love.graphics.setColor(222, 222, 222)
+            love.graphics.setColor(unpack(self.yui.Theme.colors.text))
             love.graphics.print(self.text, self.x + self.parent.size/2, self.y + math.floor(self.parent.size*0.7/2) - self.parent.size/20)
-            if self.parent.loading then love.graphics.setColor(45, 117, 223) end
+            if self.parent.loading then love.graphics.setColor(unpack(self.yui.Theme.colors.button_loading_icon)) end
             love.graphics.print(self.icon, self.x + self.parent.size/2 + self.font:getWidth(self.icon)/2 + self.font:getWidth(self.text .. ' '), 
                                 self.y + math.floor(self.parent.size*0.7/2) + self.font:getHeight()/2 - self.parent.size/20, 
                                 self.parent.icon_r, 1, 1, self.font:getWidth(self.icon)/2, self.font:getHeight()/2)
         else
-            if self.parent.loading then love.graphics.setColor(45, 117, 223) end
+            if self.parent.loading then love.graphics.setColor(unpack(self.yui.Theme.colors.button_loading_icon)) end
             love.graphics.print(self.icon, self.x + self.parent.size/2 + self.font:getWidth(self.icon)/2, 
                                 self.y + math.floor(self.parent.size*0.7/2) + self.font:getHeight()/2 - self.parent.size/20, 
                                 self.parent.icon_r, 1, 1, self.font:getWidth(self.icon)/2, self.font:getHeight()/2)
-            love.graphics.setColor(222, 222, 222)
+            love.graphics.setColor(unpack(self.yui.Theme.colors.text))
             love.graphics.print(self.text, self.x + self.parent.size/2 + self.font:getWidth(self.parent.original_icon .. ' '), self.y + math.floor(self.parent.size*0.7/2) - self.parent.size/20)
         end
     else love.graphics.print(self.text, self.x + self.parent.size/2, self.y + math.floor(self.parent.size*0.7/2) - self.parent.size/20) end
@@ -151,14 +155,15 @@ YaouiTheme.Checkbox.draw = function(self)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
-    love.graphics.setColor(222, 222, 222)
+    love.graphics.setColor(unpack(self.yui.Theme.colors.text))
     local font = love.graphics.getFont()
     love.graphics.setFont(self.font)
     love.graphics.print(self.text, self.x + self.font:getWidth(self.icon .. '  '), self.y + math.floor(self.parent.size*0.7/2))
-    love.graphics.setColor(84, 84, 84)
+    love.graphics.setColor(unpack(self.yui.Theme.colors.checkbox_bg))
     love.graphics.rectangle('line', self.x, self.y + self.h/4, 2*self.h/4, 2*self.h/4, self.w/32, self.w/32)
     love.graphics.rectangle('fill', self.x, self.y + self.h/4, 2*self.h/4, 2*self.h/4, self.w/32, self.w/32)
-    love.graphics.setColor(75, 194, 244, self.check_alpha)
+    local r, g, b = unpack(self.yui.Theme.colors.checkbox_v)
+    love.graphics.setColor(r, g, b, self.check_alpha)
     if self.check_draw then love.graphics.print(self.icon, self.x + self.parent.size/20, self.y + math.floor(self.parent.size*0.7/2) - self.parent.size/18) end
     love.graphics.setFont(font)
     love.graphics.setColor(255, 255, 255)
@@ -172,14 +177,14 @@ YaouiTheme.Dropdown.draw = function(self)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
     
-    local text_color = {188, 190, 192}
-    if self.hot then text_color = {255, 255, 255} end
+    local text_color = {unpack(self.yui.Theme.colors.text_dark)}
+    if self.hot then text_color = {unpack(self.yui.Theme.colors.text_light)} end
 
     love.graphics.setColor(unpack(text_color))
     local font = love.graphics.getFont()
     love.graphics.setFont(self.font)
     love.graphics.print(self.title .. '   ', self.x, self.y + math.floor(self.parent.size*0.7/2))
-    love.graphics.setColor(43, 110, 210)
+    love.graphics.setColor(unpack(self.yui.Theme.colors.dropdown_primary))
     love.graphics.print(self.parent.options[self.parent.current_option] .. ' ', 
                         self.x + self.font:getWidth(self.title .. '   '), 
                         self.y + math.floor(self.parent.size*0.7/2))
@@ -194,7 +199,8 @@ end
 YaouiTheme.DropdownScrollarea = {}
 YaouiTheme.DropdownScrollarea.draw = function(self)
     -- Draw scrollarea frame
-    love.graphics.setColor(32, 32, 32, 220)
+    local r, g, b = unpack(self.yui.Theme.colors.dropdown_area_bg)
+    love.graphics.setColor(r, g, b, 220)
     love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
 
     -- Draw scrollbars background
@@ -231,11 +237,12 @@ YaouiTheme.DropdownButton.update = function(self, dt)
 end
 
 YaouiTheme.DropdownButton.draw = function(self)
+    local r, g, b = unpack(self.yui.Theme.colors.dropdown_button_selected_bg)
     if self.dropdown_selected then
-        love.graphics.setColor(20, 32, 48, 220)
+        love.graphics.setColor(r, g, b, 220)
         love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
     elseif self.draw_bg then
-        love.graphics.setColor(20, 32, 48, self.alpha)
+        love.graphics.setColor(r, g, b, self.alpha)
         love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
     end
 
@@ -250,18 +257,18 @@ YaouiTheme.DropdownButton.draw = function(self)
     end
 
     if self.hot then
-        love.graphics.setColor(43, 110, 210)
+        love.graphics.setColor(unpack(self.yui.Theme.colors.dropdown_primary))
         love.graphics.rectangle('fill', self.x, self.y, self.add_x, self.h)
     end
 
     if self.dropdown_selected then
         self.add_x = self.size/4
-        love.graphics.setColor(188, 190, 192)
+        love.graphics.setColor(unpack(self.yui.Theme.colors.text_dark))
         love.graphics.rectangle('fill', self.x, self.y, self.size/4, self.h)
     end
 
-    if self.hot or self.dropdown_selected then love.graphics.setColor(255, 255, 255)
-    else love.graphics.setColor(188, 190, 192) end
+    if self.hot or self.dropdown_selected then love.graphics.setColor(unpack(self.yui.Theme.colors.text_light))
+    else love.graphics.setColor(unpack(self.yui.Theme.colors.text_dark)) end
     local font = love.graphics.getFont()
     love.graphics.setFont(self.font)
     love.graphics.print(self.text, self.x + self.size + self.add_x, self.y + math.floor(self.size*0.65/2))
@@ -277,10 +284,10 @@ YaouiTheme.FlatDropdown.draw = function(self)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
-    love.graphics.setColor(57, 59, 61)
+    love.graphics.setColor(unpack(self.yui.Theme.colors.flat_dropdown_bg))
     love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
     
-    love.graphics.setColor(222, 222, 222)
+    love.graphics.setColor(unpack(self.yui.Theme.colors.text))
     local font = love.graphics.getFont()
     love.graphics.setFont(self.font)
     love.graphics.print(self.parent.options[self.parent.current_option] .. ' ', 
@@ -297,9 +304,10 @@ YaouiTheme.FlatDropdownScrollarea = {}
 YaouiTheme.FlatDropdownScrollarea.draw = function(self)
     love.graphics.setLineStyle('rough')
     -- Draw scrollarea frame
-    love.graphics.setColor(57, 59, 61, 255)
+    local r, g, b = unpack(self.yui.Theme.colors.flat_dropdown_bg)
+    love.graphics.setColor(r, g, b, 255)
     love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
-    love.graphics.setColor(127, 157, 185, 255)
+    love.graphics.setColor(unpack(self.yui.Theme.colors.flat_dropdown_outline))
     love.graphics.rectangle('line', self.x + 1, self.y, self.w - 2, self.h)
 
     -- Draw scrollbars background
@@ -328,18 +336,18 @@ YaouiTheme.FlatDropdownButton = {}
 YaouiTheme.FlatDropdownButton.draw = function(self)
     love.graphics.setLineStyle('rough')
     if self.dropdown_selected then
-        love.graphics.setColor(30, 144, 255)
+        love.graphics.setColor(unpack(self.yui.Theme.colors.flat_dropdown_button_selected_bg))
         love.graphics.rectangle('fill', self.x + 1, self.y, self.w - 3, self.h)
     end
 
     if self.hot then
-        love.graphics.setColor(30, 144, 255)
+        love.graphics.setColor(unpack(self.yui.Theme.colors.flat_dropdown_button_selected_bg))
         love.graphics.rectangle('fill', self.x + 1, self.y, self.w - 3, self.h)
     end
     love.graphics.setLineStyle('smooth')
 
-    if self.hot or self.dropdown_selected then love.graphics.setColor(255, 255, 255)
-    else love.graphics.setColor(188, 190, 192) end
+    if self.hot or self.dropdown_selected then love.graphics.setColor(unpack(self.yui.Theme.colors.text_light))
+    else love.graphics.setColor(unpack(self.yui.Theme.colors.text_dark)) end
     local font = love.graphics.getFont()
     love.graphics.setFont(self.font)
     love.graphics.print(self.text, self.x + self.parent.size/3, self.y)
@@ -356,21 +364,21 @@ YaouiTheme.FlatTextinput.draw = function(self)
     love.graphics.setFont(self.font)
 
     -- Draw textinput background
-    love.graphics.setColor(57, 59, 61)
+    love.graphics.setColor(unpack(self.yui.Theme.colors.flat_textinput_bg))
     love.graphics.rectangle('fill', self.x, self.y, self.w, self.h)
 
     -- Draw selected text with inverted color and blue selection background
     if self.selection_index and self.index ~= self.selection_index then
-        love.graphics.setColor(198, 198, 198)
+        love.graphics.setColor(unpack(self.yui.Theme.colors.text_dark))
         self.text:draw()
 
         if self.selected then
-            love.graphics.setColor(51, 153, 255)
+            love.graphics.setColor(unpack(self.yui.Theme.colors.flat_textinput_selected_bg))
             for i, _ in ipairs(self.selection_positions) do
                 love.graphics.rectangle('fill', self.selection_positions[i].x, self.selection_positions[i].y, self.selection_sizes[i].w, self.selection_sizes[i].h)
             end
 
-            love.graphics.setColor(255, 255, 255)
+            love.graphics.setColor(unpack(self.yui.Theme.colors.text_light))
             if love_version == '0.9.1' or love_version == '0.9.2' then
                 for i, _ in ipairs(self.selection_positions) do
                     love.graphics.setStencil(function() 
@@ -393,11 +401,11 @@ YaouiTheme.FlatTextinput.draw = function(self)
 
     -- Draw text normally + cursor
     else
-        love.graphics.setColor(198, 198, 198)
+        love.graphics.setColor(unpack(self.yui.Theme.colors.text_dark))
         self.text:draw()
 
         if self.selected and self.cursor_visible then 
-            love.graphics.setColor(198, 198, 198)
+            love.graphics.setColor(unpack(self.yui.Theme.colors.text_dark))
             for i, _ in ipairs(self.selection_positions) do
                 love.graphics.line(self.selection_positions[i].x, self.selection_positions[i].y, 
                 self.selection_positions[i].x, self.selection_positions[i].y + self.selection_sizes[i].h)
@@ -425,7 +433,7 @@ YaouiTheme.HorizontalSeparator.draw = function(self)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
-    love.graphics.setColor(160, 160, 160)
+    love.graphics.setColor(unpack(self.yui.Theme.colors.separator))
     love.graphics.setLineStyle('rough')
     love.graphics.line(self.x + self.margin_left, self.y + self.size/2, self.x + self.w - self.margin_left - self.margin_right, self.y + self.size/2)
     love.graphics.setLineStyle('smooth')
@@ -446,7 +454,7 @@ end
 YaouiTheme.IconButton = {}
 YaouiTheme.IconButton.new = function(self)
     self.hover_alpha = 0
-    self.color = {unpack(self.parent.base_color)}
+    self.color = {unpack(self.yui.Theme.colors.icon_button_primary)}
     self.timer = self.yui.Timer()
 end
 
@@ -467,8 +475,8 @@ YaouiTheme.IconButton.update = function(self, dt)
 end
 
 YaouiTheme.IconButton.draw = function(self)
-    if self.enter then self.timer:tween('color', 0.25, self, {color = {unpack(self.parent.hover_color)}}, 'linear')
-    elseif self.exit then self.timer:tween('color', 0.25, self, {color = {unpack(self.parent.base_color)}}, 'linear') end
+    if self.enter then self.timer:tween('color', 0.25, self, {color = {unpack(self.yui.Theme.colors.icon_button_hover)}}, 'linear')
+    elseif self.exit then self.timer:tween('color', 0.25, self, {color = {unpack(self.yui.Theme.colors.icon_button_primary)}}, 'linear') end
 
     if self.yui.debug_draw then
         love.graphics.setColor(222, 80, 80)
@@ -476,14 +484,15 @@ YaouiTheme.IconButton.draw = function(self)
     end
 
     if self.parent.hover then
-        love.graphics.setColor(12, 12, 12, self.hover_alpha)
+        local r, g, b = unpack(self.yui.Theme.colors.hover_bg)
+        love.graphics.setColor(r, g, b, self.hover_alpha)
         love.graphics.rectangle('fill', 
                                 self.x + self.w/2 - self.parent.hover_font:getWidth(self.parent.hover)/2 - math.max(self.parent.size, 40)/8, 
                                 self.y - math.max(self.parent.size, 40)/1.9, 
                                 self.parent.hover_font:getWidth(self.parent.hover) + math.max(self.parent.size, 40)/4,
                                 self.parent.hover_font:getHeight(), self.h/16, self.h/16)
 
-        local r, g, b = unpack(self.parent.base_color)
+        local r, g, b = unpack(self.yui.Theme.colors.hover_text)
         love.graphics.setColor(r, g, b, self.hover_alpha)
         local font = love.graphics.getFont()
         love.graphics.setFont(self.parent.hover_font)
@@ -525,7 +534,7 @@ YaouiTheme.ImageButton.draw = function(self)
     if self.parent.overlay then self.parent.overlay(self.parent) end
 
     love.graphics.setLineWidth(2.5)
-    local r, g, b = unpack(self.parent.hover_color)
+    local r, g, b = unpack(self.yui.Theme.colors.image_button_primary)
     love.graphics.setColor(r, g, b, self.alpha)
     if self.parent.rounded_corners then love.graphics.rectangle('line', self.x, self.y, self.w, self.h, self.h/18, self.h/18)
     else love.graphics.rectangle('line', self.x, self.y, self.w, self.h) end
@@ -537,7 +546,6 @@ end
 YaouiTheme.TabButton = {}
 YaouiTheme.TabButton.new = function(self)
     self.hover_alpha = 0
-    self.color = {unpack(self.parent.base_color)}
     self.timer = self.yui.Timer()
 end
 
@@ -563,18 +571,19 @@ YaouiTheme.TabButton.draw = function(self)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
-    local text_color = {188, 190, 192}
-    if self.hot then text_color = {255, 255, 255} end
+    local text_color = {unpack(self.yui.Theme.colors.text_dark)}
+    if self.hot then text_color = {unpack(self.yui.Theme.colors.text_light)} end
 
     if self.hover then
-        love.graphics.setColor(12, 12, 12, self.hover_alpha)
+        local r, g, b = unpack(self.yui.Theme.colors.hover_bg)
+        love.graphics.setColor(r, g, b, self.hover_alpha)
         love.graphics.rectangle('fill', 
                                 self.x + self.w/2 - self.parent.hover_font:getWidth(self.hover)/2 - math.max(self.parent.size, 40)/8, 
                                 self.y - self.parent.hover_font:getHeight()/1.35 - math.max(self.parent.size, 40)/12, 
                                 self.parent.hover_font:getWidth(self.hover) + math.max(self.parent.size, 40)/4,
                                 self.parent.hover_font:getHeight(), self.h/16, self.h/16)
 
-        local r, g, b = unpack(self.parent.base_color)
+        local r, g, b = unpack(self.yui.Theme.colors.hover_text)
         love.graphics.setColor(r, g, b, self.hover_alpha)
         local font = love.graphics.getFont()
         love.graphics.setFont(self.parent.hover_font)
@@ -584,7 +593,7 @@ YaouiTheme.TabButton.draw = function(self)
     end
 
     if self.i == self.parent.selected_tab then
-        love.graphics.setColor(36, 104, 204)
+        love.graphics.setColor(unpack(self.yui.Theme.colors.tab_primary))
         love.graphics.rectangle('fill', self.x, self.y + self.h - self.parent.size/4, self.w, self.parent.size/4)
     end
 
@@ -623,21 +632,21 @@ YaouiTheme.Textinput.draw = function(self)
     love.graphics.setFont(self.font)
 
     -- Draw textinput background
-    love.graphics.setColor(12, 12, 12)
+    love.graphics.setColor(unpack(self.yui.Theme.colors.textinput_bg))
     love.graphics.rectangle('fill', self.x, self.y, self.w, self.h, self.h/4, self.h/4)
 
     -- Draw selected text with inverted color and blue selection background
     if self.selection_index and self.index ~= self.selection_index then
-        love.graphics.setColor(198, 198, 198)
+        love.graphics.setColor(unpack(self.yui.Theme.colors.text_dark))
         self.text:draw()
 
         if self.selected then
-            love.graphics.setColor(51, 153, 255)
+            love.graphics.setColor(unpack(self.yui.Theme.colors.textinput_selected_text_bg))
             for i, _ in ipairs(self.selection_positions) do
                 love.graphics.rectangle('fill', self.selection_positions[i].x, self.selection_positions[i].y, self.selection_sizes[i].w, self.selection_sizes[i].h)
             end
 
-            love.graphics.setColor(255, 255, 255)
+            love.graphics.setColor(unpack(self.yui.Theme.colors.text_light))
             if love_version == '0.9.1' or love_version == '0.9.2' then
                 for i, _ in ipairs(self.selection_positions) do
                     love.graphics.setStencil(function() 
@@ -660,11 +669,11 @@ YaouiTheme.Textinput.draw = function(self)
 
     -- Draw text normally + cursor
     else
-        love.graphics.setColor(198, 198, 198)
+        love.graphics.setColor(unpack(self.yui.Theme.colors.text_dark))
         self.text:draw()
 
         if self.selected and self.cursor_visible then 
-            love.graphics.setColor(198, 198, 198)
+            love.graphics.setColor(unpack(self.yui.Theme.colors.text_dark))
             for i, _ in ipairs(self.selection_positions) do
                 love.graphics.line(self.selection_positions[i].x, self.selection_positions[i].y, 
                 self.selection_positions[i].x, self.selection_positions[i].y + self.selection_sizes[i].h)
@@ -692,7 +701,7 @@ YaouiTheme.VerticalSeparator.draw = function(self)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
-    love.graphics.setColor(160, 160, 160)
+    love.graphics.setColor(unpack(self.yui.Theme.colors.separator))
     love.graphics.setLineStyle('rough')
     love.graphics.line(self.x + self.size/2, self.y + self.margin_top, self.x + self.size/2, self.y + self.h - self.margin_top - self.margin_bottom)
     love.graphics.setLineStyle('smooth')

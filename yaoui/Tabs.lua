@@ -10,7 +10,6 @@ function Tabs:new(yui, settings)
     self.tabs = settings.tabs
     self.font = love.graphics.newFont(self.yui.Theme.open_sans_semibold, math.floor(self.size*0.7))
     self.hover_font = love.graphics.newFont(self.yui.Theme.open_sans_light, math.floor(math.max(self.size, 40)*0.4))
-    self.base_color = settings.base_color or {204, 204, 204}
     local tabs_w = 0
     self.h = self.font:getHeight() + math.floor(self.size*0.7)
     self.selected_tab = settings.selected_tab or 1
