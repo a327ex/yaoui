@@ -50,6 +50,7 @@ function Tabs:update(dt)
             end
         end
         button:update(dt) 
+        if button.hot then love.mouse.setCursor(self.yui.Theme.hand_cursor) end
     end
 end
 

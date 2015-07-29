@@ -37,8 +37,7 @@ function Checkbox:update(dt)
     self.checkbox:update(dt)
 
     self.checked = self.checkbox.checked
-    if self.checkbox.enter then love.mouse.setCursor(self.yui.Theme.hand_cursor) end
-    if self.checkbox.exit then love.mouse.setCursor() end
+    if self.checkbox.hot then love.mouse.setCursor(self.yui.Theme.hand_cursor) end
 end
 
 function Checkbox:draw()

@@ -41,8 +41,7 @@ function ImageButton:update(dt)
     self.button:update(dt)
     self.alpha = self.button.alpha
 
-    if self.button.enter then love.mouse.setCursor(self.yui.Theme.hand_cursor) end
-    if self.button.exit then love.mouse.setCursor() end
+    if self.button.hot then love.mouse.setCursor(self.yui.Theme.hand_cursor) end
 end
 
 function ImageButton:draw()

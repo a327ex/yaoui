@@ -48,8 +48,7 @@ function Button:update(dt)
     self.button.x, self.button.y = self.x, self.y
     self.button:update(dt)
 
-    if self.button.enter then love.mouse.setCursor(self.yui.Theme.hand_cursor) end
-    if self.button.exit then love.mouse.setCursor() end
+    if self.button.hot then love.mouse.setCursor(self.yui.Theme.hand_cursor) end
     if self.loading then self.icon_r = self.icon_r + 3*math.pi*dt end
 end
 

@@ -100,8 +100,7 @@ function Dropdown:update(dt)
     self.main_button:update(dt)
     if self.show_dropdown then self.down_area:update(dt) end
 
-    if self.main_button.enter then love.mouse.setCursor(self.yui.Theme.hand_cursor) end
-    if self.main_button.exit then love.mouse.setCursor() end
+    if self.main_button.hot then love.mouse.setCursor(self.yui.Theme.hand_cursor) end
 end
 
 function Dropdown:draw()

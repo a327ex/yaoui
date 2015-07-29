@@ -11,7 +11,7 @@ YaouiTheme.colors = {
 
     button_primary = {31, 55, 95},
     button_hot = {34, 86, 148},
-    button_pressed = {34, 104, 204},
+    button_pressed = {36, 104, 204},
     button_loading_icon = {45, 117, 223},
 
     checkbox_bg = {84, 84, 84},

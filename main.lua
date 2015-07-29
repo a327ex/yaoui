@@ -22,7 +22,6 @@ function love.load()
             yui.FlatDropdown({title = 'Dropdown', options = {'Drop', 'Dropdown', 'Super Dropdown', 'Steam', 'Skype'}, current_option = 1, size = 20}),
             yui.FlatTextinput({}),
             yui.Textinput({}),
-            yui.VerticalSpacing({h = 100}),
             yui.ImageButton({image = love.graphics.newImage('hxh2.jpg'), ix = 200, iy = 200, w = 200, h = 200}),
             yui.IconButton({icon = 'fa-close', hover = 'Close', size = 40, onClick = function(self) print(1) end}),
             yui.Button({size = 20, hover = 'Button', icon = 'fa-check', icon_right = true, text = 'Button'}),

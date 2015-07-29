@@ -35,6 +35,7 @@ function View:new(yui, x, y, w, h, layout)
 end
 
 function View:update(dt)
+    love.mouse.setCursor()
     self.layout[1]:update(dt)
     if self.layout.overlay then 
         for _, element in ipairs(self.layout.overlay) do
