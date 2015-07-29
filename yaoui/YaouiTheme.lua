@@ -48,18 +48,20 @@ YaouiTheme.Button.draw = function(self)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
-    love.graphics.setColor(12, 12, 12, self.hover_alpha)
-    love.graphics.rectangle('fill', 
-                            self.x + self.w/2 - (self.parent.hover_font:getWidth(self.parent.hover) + math.max(self.parent.size, 40)/4)/2, 
-                            self.y - math.max(self.parent.size, 40)/1.5,
-                            self.parent.hover_font:getWidth(self.parent.hover) + math.max(self.parent.size, 40)/4, 
-                            self.parent.hover_font:getHeight(), self.h/16, self.h/16)
+    if self.parent.hover then
+        love.graphics.setColor(12, 12, 12, self.hover_alpha)
+        love.graphics.rectangle('fill', 
+                                self.x + self.w/2 - (self.parent.hover_font:getWidth(self.parent.hover) + math.max(self.parent.size, 40)/4)/2, 
+                                self.y - math.max(self.parent.size, 40)/1.5,
+                                self.parent.hover_font:getWidth(self.parent.hover) + math.max(self.parent.size, 40)/4, 
+                                self.parent.hover_font:getHeight(), self.h/16, self.h/16)
 
-    local r, g, b = unpack(self.parent.base_color)
-    love.graphics.setColor(r, g, b, self.hover_alpha)
-    local font = love.graphics.getFont()
-    love.graphics.setFont(self.parent.hover_font)
-    love.graphics.print(self.parent.hover, self.x + self.w/2 - self.parent.hover_font:getWidth(self.parent.hover)/2, self.y - math.max(self.parent.size, 40)/1.45)
+        local r, g, b = unpack(self.parent.base_color)
+        love.graphics.setColor(r, g, b, self.hover_alpha)
+        local font = love.graphics.getFont()
+        love.graphics.setFont(self.parent.hover_font)
+        love.graphics.print(self.parent.hover, self.x + self.w/2 - self.parent.hover_font:getWidth(self.parent.hover)/2, self.y - math.max(self.parent.size, 40)/1.45)
+    end
 
     love.graphics.setColor(unpack(self.color))
     love.graphics.rectangle('line', self.x, self.y, self.w, self.h, self.w/16, self.w/16)
@@ -426,18 +428,20 @@ YaouiTheme.IconButton.draw = function(self)
         love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
     end
 
-    love.graphics.setColor(12, 12, 12, self.hover_alpha)
-    love.graphics.rectangle('fill', 
-                            self.x + self.w/2 - self.parent.hover_font:getWidth(self.parent.hover)/2 - math.max(self.parent.size, 40)/8, 
-                            self.y - math.max(self.parent.size, 40)/1.9, 
-                            self.parent.hover_font:getWidth(self.parent.hover) + math.max(self.parent.size, 40)/4,
-                            self.parent.hover_font:getHeight(), self.h/16, self.h/16)
+    if self.parent.hover then
+        love.graphics.setColor(12, 12, 12, self.hover_alpha)
+        love.graphics.rectangle('fill', 
+                                self.x + self.w/2 - self.parent.hover_font:getWidth(self.parent.hover)/2 - math.max(self.parent.size, 40)/8, 
+                                self.y - math.max(self.parent.size, 40)/1.9, 
+                                self.parent.hover_font:getWidth(self.parent.hover) + math.max(self.parent.size, 40)/4,
+                                self.parent.hover_font:getHeight(), self.h/16, self.h/16)
 
-    local r, g, b = unpack(self.parent.base_color)
-    love.graphics.setColor(r, g, b, self.hover_alpha)
-    local font = love.graphics.getFont()
-    love.graphics.setFont(self.parent.hover_font)
-    love.graphics.print(self.parent.hover, self.x + self.w/2 - self.parent.hover_font:getWidth(self.parent.hover)/2, self.y - math.max(self.parent.size, 40)/1.8)
+        local r, g, b = unpack(self.parent.base_color)
+        love.graphics.setColor(r, g, b, self.hover_alpha)
+        local font = love.graphics.getFont()
+        love.graphics.setFont(self.parent.hover_font)
+        love.graphics.print(self.parent.hover, self.x + self.w/2 - self.parent.hover_font:getWidth(self.parent.hover)/2, self.y - math.max(self.parent.size, 40)/1.8)
+    end
 
     local r, g, b = unpack(self.color)
     love.graphics.setColor(r, g, b, 255)
@@ -480,6 +484,71 @@ YaouiTheme.ImageButton.draw = function(self)
     else love.graphics.rectangle('line', self.x, self.y, self.w, self.h) end
     love.graphics.setColor(255, 255, 255, 255)
     love.graphics.setLineWidth(1)
+end
+
+-- Tabs
+YaouiTheme.TabButton = {}
+YaouiTheme.TabButton.new = function(self)
+    self.hover_alpha = 0
+    self.color = {unpack(self.parent.base_color)}
+    self.timer = self.yui.Timer()
+end
+
+YaouiTheme.TabButton.update = function(self, dt)
+    self.timer:update(dt)
+
+    if self.hover then
+        if self.enter then
+            self.timer:after('hover', 0.3, function()
+                self.timer:tween('hover_alpha', 0.1, self, {hover_alpha = 232}, 'linear')
+            end)
+        end
+        if self.exit then 
+            self.timer:cancel('hover') 
+            self.timer:tween('hover_alpha', 0.1, self, {hover_alpha = 0}, 'linear')
+        end
+    end
+end
+
+YaouiTheme.TabButton.draw = function(self)
+    if self.yui.debug_draw then
+        love.graphics.setColor(222, 80, 80)
+        love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    end
+
+    local text_color = {188, 190, 192}
+    if self.hot then text_color = {255, 255, 255} end
+
+    if self.hover then
+        love.graphics.setColor(12, 12, 12, self.hover_alpha)
+        love.graphics.rectangle('fill', 
+                                self.x + self.w/2 - self.parent.hover_font:getWidth(self.hover)/2 - math.max(self.parent.size, 40)/8, 
+                                self.y - self.parent.hover_font:getHeight()/1.35 - math.max(self.parent.size, 40)/12, 
+                                self.parent.hover_font:getWidth(self.hover) + math.max(self.parent.size, 40)/4,
+                                self.parent.hover_font:getHeight(), self.h/16, self.h/16)
+
+        local r, g, b = unpack(self.parent.base_color)
+        love.graphics.setColor(r, g, b, self.hover_alpha)
+        local font = love.graphics.getFont()
+        love.graphics.setFont(self.parent.hover_font)
+        love.graphics.print(self.hover, 
+                            self.x + self.w/2 - self.parent.hover_font:getWidth(self.hover)/2, 
+                            self.y - self.parent.hover_font:getHeight()/1.35 - math.max(self.parent.size, 40)/16 - math.max(self.parent.size, 40)/12)
+    end
+
+    if self.i == self.parent.selected_tab then
+        love.graphics.setColor(36, 104, 204)
+        love.graphics.rectangle('fill', self.x, self.y + self.h - self.parent.size/4, self.w, self.parent.size/4)
+    end
+
+    local r, g, b = unpack(text_color)
+    love.graphics.setColor(r, g, b, 255)
+    local font = love.graphics.getFont()
+    love.graphics.setFont(self.parent.font)
+    love.graphics.print(self.text, self.x + self.w/2 - self.parent.font:getWidth(self.text)/2, self.y + self.parent.font:getHeight()/4)
+    love.graphics.setFont(font)
+    love.graphics.setColor(255, 255, 255, 255)
+
 end
 
 -- Text

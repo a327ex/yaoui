@@ -24,11 +24,14 @@ function love.load()
             yui.Textinput({}),
             yui.ImageButton({image = love.graphics.newImage('hxh2.jpg'), ix = 200, iy = 200, w = 200, h = 200}),
             yui.IconButton({icon = 'fa-close', hover = 'Close', size = 40, onClick = function(self) print(1) end}),
-            yui.Button({size = 60, hover = 'Button', icon = 'fa-check', icon_right = true, text = 'Button', onClick = function(self) 
-                -- yui.openColorPicker()
-                -- yui.openSaveDialog('Save', {'All files', '*.*'}, 1)
-                yui.openOpenDialog('Open', {'All files', '*.*'}, 1)
-            end}),
+            yui.Button({size = 20, hover = 'Button', icon = 'fa-check', icon_right = true, text = 'Button'}),
+            yui.Tabs({
+                tabs = {
+                    {text = 'Asahfdfj', hover = 'Aiuue'},
+                    {text = 'shfd', hover = 'Ahdueieoooooo'},   
+                    {text = 'adwdsfsdfsdssahfdfj', hover = 'Hue'},   
+                }
+            }),
         })
     })
 end
