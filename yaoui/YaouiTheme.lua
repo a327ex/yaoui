@@ -330,6 +330,7 @@ YaouiTheme.FlatDropdownScrollarea.draw = function(self)
         end
     end
     love.graphics.setLineStyle('smooth')
+
 end
 
 YaouiTheme.FlatDropdownButton = {}
