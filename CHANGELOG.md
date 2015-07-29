@@ -1,6 +1,34 @@
-v0.0.2
+v0.0.3
 
 ## CHANGELOG
+
+### v0.0.3
+
+#### Additions
+
+* Added onEnter option for Textinput and FlatTextinput - [4a80969](https://github.com/adonaac/blade/commit/4a8096925ffddb225865fcd83ade7a4d458f935c) (2015-07-28 06:02:46)
+* Added ImageButton - [b98a646](https://github.com/adonaac/blade/commit/b98a646f30eee0eafd55f3c5602ce6dc2a02c4d9) (2015-07-28 07:36:47)
+* Added onWidthChange callback to Dropdown - [b98a646](https://github.com/adonaac/blade/commit/b98a646f30eee0eafd55f3c5602ce6dc2a02c4d9) (2015-07-28 07:36:47)
+* Added hover options for Button and IconButton - [035c254](https://github.com/adonaac/blade/commit/035c254b0e97646b8ca544e4384a7cf8ab23504d) (2015-07-28 09:56:33)
+* Added winapi for opening dialogs - [9a5f8fb](https://github.com/adonaac/blade/commit/9a5f8fb9328c2759ec5d97e1db1c957d5c8b3943) (2015-07-28 11:09:22)
+* Added openColorPicker call - [9f50bd6](https://github.com/adonaac/blade/commit/9f50bd6347fac80a0e858dd8b6e3e0864c7e28fe) (2015-07-28 12:10:47)
+* Added openSaveDialog call - [aa2f91b](https://github.com/adonaac/blade/commit/aa2f91b991e9f41225cb8bb25d9c4f972e3d74ce) (2015-07-28 20:49:18)
+* Added openOpenDialog call - [aaeb1eb](https://github.com/adonaac/blade/commit/aaeb1eb06511f11048bf25f28a35ce6385f77049) (2015-07-28 20:51:03)
+* Added Tabs - [840e791](https://github.com/adonaac/blade/commit/840e791a61cb97d92e415286f176dc40909cf148) (2015-07-28 23:43:18)
+* Added VerticalSeparator - [0dd9d68](https://github.com/adonaac/blade/commit/0dd9d685f1ab93a11c68799745b0d9214b1a8898) (2015-07-29 01:01:17)
+* Added VerticalSpacing - [0dd9d68](https://github.com/adonaac/blade/commit/0dd9d685f1ab93a11c68799745b0d9214b1a8898) (2015-07-29 01:01:17)
+* Added HorizontalSpacing - [0dd9d68](https://github.com/adonaac/blade/commit/0dd9d685f1ab93a11c68799745b0d9214b1a8898) (2015-07-29 01:01:17)
+* Added colors table to YaouiTheme - [e815458](https://github.com/adonaac/blade/commit/e8154580d9c883f105a8147a64fd20334307f7b5) (2015-07-29 01:42:25)
+
+#### Fixes
+
+* Fixed cursor changes - [dad235f](https://github.com/adonaac/blade/commit/dad235fa3e93b97ea17bf7dcb5beb0d46f5045e1) (2015-07-29 02:05:16)
+
+#### Updates
+
+* Integrated YaouiTheme colors - [e9199b9](https://github.com/adonaac/blade/commit/e9199b93beb6959c600e09537f5d34bc09814ff1) (2015-07-29 02:35:38)
+
+---
 
 ### v0.0.2
 
