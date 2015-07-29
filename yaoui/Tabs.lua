@@ -18,14 +18,17 @@ function Tabs:new(yui, settings)
     for i, tab in ipairs(self.tabs) do
         local w = self.font:getWidth(tab.text) + self.size
         tabs_w = tabs_w + w
-        table.insert(self.buttons, self.yui.UI.Button(0, 0, w, self.h, {
+        local button = self.yui.UI.Button(0, 0, w, self.h, {
             yui = self.yui,
             extensions = {self.yui.Theme.TabButton},
             parent = self,
             hover = tab.hover,
             text = tab.text,
             i = i,
-        }))
+        })
+        table.insert(self.buttons, button)
+        self[i] = button
+        if tab.name then self[tab.name] = button end
     end
     self.w = tabs_w
 end

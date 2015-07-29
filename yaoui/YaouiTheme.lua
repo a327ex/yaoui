@@ -9,6 +9,9 @@ YaouiTheme.open_sans_bold = yaoui_path .. '/fonts/OpenSans-Bold.ttf'
 YaouiTheme.open_sans_semibold = yaoui_path .. '/fonts/OpenSans-Semibold.ttf'
 YaouiTheme.hand_cursor = love.mouse.getSystemCursor("hand")
 YaouiTheme.ibeam = love.mouse.getSystemCursor("ibeam")
+YaouiTheme.colors = {
+
+}
 
 -- Button
 YaouiTheme.Button = {}
@@ -395,6 +398,16 @@ YaouiTheme.HorizontalSeparator.draw = function(self)
     love.graphics.setColor(255, 255, 255)
 end
 
+-- HorizontalSpacing
+YaouiTheme.HorizontalSpacing = {}
+YaouiTheme.HorizontalSpacing.draw = function(self)
+    if self.yui.debug_draw then
+        love.graphics.setColor(222, 80, 80)
+        love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    end
+    love.graphics.setColor(255, 255, 255)
+end
+
 -- IconButton
 YaouiTheme.IconButton = {}
 YaouiTheme.IconButton.new = function(self)
@@ -634,6 +647,31 @@ YaouiTheme.Textinput.draw = function(self)
     end
 
     love.graphics.setFont(font)
+    love.graphics.setColor(255, 255, 255)
+end
+
+-- VerticalSeparator
+YaouiTheme.VerticalSeparator = {}
+YaouiTheme.VerticalSeparator.draw = function(self)
+    if self.yui.debug_draw then
+        love.graphics.setColor(222, 80, 80)
+        love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    end
+
+    love.graphics.setColor(160, 160, 160)
+    love.graphics.setLineStyle('rough')
+    love.graphics.line(self.x + self.size/2, self.y + self.margin_top, self.x + self.size/2, self.y + self.h - self.margin_top - self.margin_bottom)
+    love.graphics.setLineStyle('smooth')
+    love.graphics.setColor(255, 255, 255)
+end
+
+-- VerticalSpacing
+YaouiTheme.VerticalSpacing = {}
+YaouiTheme.VerticalSpacing.draw = function(self)
+    if self.yui.debug_draw then
+        love.graphics.setColor(222, 80, 80)
+        love.graphics.rectangle('line', self.x, self.y, self.w, self.h)
+    end
     love.graphics.setColor(255, 255, 255)
 end
 
