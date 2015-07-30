@@ -2,7 +2,7 @@
 
 <p align="center">
  <a href="https://imgrush.com/cogghKLdAEuv">
-  <img border="0" src="http://vgy.me/ApgJHW.jpg">
+  <img border="0" src="http://i.imgur.com/z1h7AUH.jpg">
  </a>
 </p>
 
