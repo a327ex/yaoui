@@ -1,6 +1,18 @@
-v0.0.3
+v0.0.4
 
 ## CHANGELOG
+
+### v0.0.4
+
+#### Additions
+
+* Added Anime example - [6564c3d](https://github.com/adonaac/blade/commit/6564c3d031dd826b7ee7c8f56b09e13c5cffbfd6) (2015-07-30 00:09:56)
+
+#### Updates
+
+* Updated and fixed a number of issues (result of Anime example) - [6564c3d](https://github.com/adonaac/blade/commit/6564c3d031dd826b7ee7c8f56b09e13c5cffbfd6) (2015-07-30 00:09:56)
+
+---
 
 ### v0.0.3
 
