@@ -1,5 +1,11 @@
 **yaoui** is a UI kit for LÖVE. If you need a fast way to build half-decent looking UI without having to worry about much then this module is for you. There are options for customization like changing theme colors or even how each UI element looks, but those are not the main problems this kit tries to solve.
 
+<p align="center">
+ <a href="https://imgrush.com/cogghKLdAEuv">
+  <img border="0" src="http://vgy.me/ApgJHW.jpg">
+ </a>
+</p>
+
 ## Table of Contents
 
 * [Introduction](#introduction)
