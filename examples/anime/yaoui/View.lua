@@ -79,7 +79,7 @@ function View:setElementPosition(element, x, y)
                 local e = element.layout.bottom[i]
                 self:setElementPosition(e, 
                                         element.x + element.margin_left, 
-                                        element.y + element.margin_top + element.h - element.margin_bottom - e.h - (#element.layout.bottom - i)*element.spacing - h)
+                                        element.y + element.h - element.parent.margin_top - element.margin_bottom - e.h - (#element.layout.bottom - i)*element.spacing - h)
                 h = h + e.h
             end
         end
@@ -95,7 +95,7 @@ function View:setElementPosition(element, x, y)
             for i = #element.layout.right, 1, -1 do
                 local e = element.layout.right[i]
                 self:setElementPosition(e, 
-                                        element.x + element.margin_left + element.w - element.margin_right - e.w - (#element.layout.right - i)*element.spacing - w,
+                                        element.x + element.w - element.parent.margin_left - element.margin_right - e.w - (#element.layout.right - i)*element.spacing - w,
                                         element.y + element.margin_top)
                 w = w + e.w
             end
