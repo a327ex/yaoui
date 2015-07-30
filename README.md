@@ -148,7 +148,7 @@ view = yui.View(50, 50, 600, 300, {
 
 ---
 
-With these 3 main elements you get a good compromise between not having to do any manual placement but also being able to lay your elements out in a way that looks appealing. You can put Flows instead of Stacks, Stacks instead of Flows and have them be nested in whatever way you want. The only limitation is that a View should only have one element and that element should be either a Stack or a Flow (and then inside this Stack/Flow you can do whatever).
+With these 3 main elements you get a good compromise between not having to do any manual placement but also being able to lay your elements out in a way that looks appealing. You can put Flows inside Stacks, Stacks inside Flows, Stacks inside Stacks, etc and have them be nested in whatever way you want. The only limitation is that a View should only have one element and that element should be either a Stack or a Flow (and then inside this Stack/Flow you can do whatever).
 
 ### Accessing elements
 
