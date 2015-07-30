@@ -492,7 +492,11 @@ for color_name, color in pairs(yui.Theme.colors) do
 end
 ```
 
-The second way of changing the theme is by specifying the draw functions of each element yourself. This is harder because it requires you to have an understanding of the attributes of each UI element and how they work, but it's very doable. You should start by removing all `new` and `update` functions, since those are only used if you need something like tweens or transitions. Then you should clear out the draw functions (remove all their content) and start defining, for each object you wanna use, how they will be drawn. Use Thranduil's TestTheme and yaoui's YaouiTheme as reference points and go from there. It's also important to keep all draw functions defined, even if they're empty, otherwise the program won't run.
+![red](http://i.imgur.com/O1nAnjo.jpg)
+
+The second way of changing the theme is by specifying the draw functions of each element yourself. This is harder because it requires you to have an understanding of the attributes of each UI element and how they work, but it's very doable. 
+
+You should start by removing all `new` and `update` functions, since those are only used if you need something like tweens or transitions. Then you should clear out the draw functions (remove all their content) and start defining, for each object you wanna use, how they will be drawn. Use Thranduil's TestTheme and yaoui's YaouiTheme as reference points and go from there. It's also important to keep all draw functions defined, even if they're empty, otherwise the program won't run.
 
 ## LICENSE
 
