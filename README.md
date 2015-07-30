@@ -90,7 +90,7 @@ end
 
 And that will get you something like this (yui.debug_draw is set to true so you can see View and Stack area rectangles):
 
-ya1.gif
+![ya1](http://i.imgur.com/VBBfpLi.gif)
 
 ---
 
@@ -120,7 +120,7 @@ view = yui.View(50, 50, 400, 300, {
 
 Should get you this:
 
-ya2.gif
+![ya2](http://i.imgur.com/mmQOZVq.gif)
 
 ---
 
@@ -143,6 +143,8 @@ view = yui.View(50, 50, 600, 300, {
   })
 })
 ```
+
+![ya3](http://i.imgur.com/I4rMyyo.gif)
 
 ---
 
