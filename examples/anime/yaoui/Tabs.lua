@@ -42,7 +42,7 @@ function Tabs:update(dt)
             button.x, button.y = self.x + w, self.y
             w = w + button.w
         end
-        if button.hot and button.released then
+        if button.hot and button.pressed then
             self.selected_tab = i
             if self.tabs[i].onClick then 
                 self.tabs[i]:onClick() 
