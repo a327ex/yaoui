@@ -1,6 +1,15 @@
-v0.1.0
+v0.1.1
 
 ## CHANGELOG
+
+### v0.1.1
+
+
+#### Fixes
+
+* Fixed loading issues and removed winapi references - [b83f752](https://github.com/adonaac/blade/commit/b83f7526132227b55083c131b5453c7fc0d9e6b3) (2015-08-21 10:40:42)
+
+---
 
 ### v0.1.0
 
