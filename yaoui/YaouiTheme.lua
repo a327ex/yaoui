@@ -1,4 +1,5 @@
 local yaoui_path = (...):sub(1, -12)
+yaoui_path = yaoui_path:gsub("%.", "/")
 local YaouiTheme = {}
 
 YaouiTheme.colors = {
