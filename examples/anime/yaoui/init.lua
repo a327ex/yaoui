@@ -1,3 +1,4 @@
+
 local yaoui_path = ... .. '.'
 
 local yaoui = {}
@@ -65,6 +66,7 @@ yaoui.update = function(views)
     end
 end
 
+--[[
 yaoui.winapi = require(yaoui_path .. 'dialogs.winapi')
 yaoui.colorchooser = require(yaoui_path .. 'dialogs.winapi.colorchooser')
 yaoui.filedialogs = require(yaoui_path .. 'dialogs.winapi.filedialogs')
@@ -96,5 +98,6 @@ yaoui.openOpenDialog = function(title, filter, filter_index, flags)
     })
     if ok then return info.filepath, info.filename, info.filter_index end
 end
+]]--
 
 return yaoui
