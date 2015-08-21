@@ -1,7 +1,7 @@
 local Timer = {}
 Timer.__index = Timer
 
-local humpTimer = require(... .. '.timer')
+local humpTimer = require((...):sub(1, -7) .. '.hump_timer.timer')
 
 function Timer.new()
     local self = {}
