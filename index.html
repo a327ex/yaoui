@@ -19,30 +19,992 @@
     </section>
 
     <section class="main-content">
-      <h3>
-<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+      <p><strong>yaoui</strong> is a UI kit for LÖVE. If you need a fast way to build half-decent looking UI without having to worry about much then this module is for you. There are options for customization like changing theme colors or even how each UI element looks, but those are not the main problems this kit tries to solve.</p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here <a href="https://guides.github.com/features/mastering-markdown/">using GitHub Flavored Markdown</a>, select a template crafted by a designer, and publish. After your page is generated, you can check out the new <code>gh-pages</code> branch locally. If you’re using GitHub Desktop, simply sync your repository and you’ll see the new branch.</p>
+<p align="center">
+ <a href="https://imgrush.com/cogghKLdAEuv">
+  <img border="0" src="http://i.imgur.com/z1h7AUH.jpg">
+ </a>
+</p>
+
+<h2>
+<a id="table-of-contents" class="anchor" href="#table-of-contents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Table of Contents</h2>
+
+<ul>
+<li>
+<a href="#introduction">Introduction</a>
+
+<ul>
+<li><a href="#view">View</a></li>
+<li><a href="#stack">Stack</a></li>
+<li><a href="#flow">Flow</a></li>
+<li><a href="#accessing-elements">Accessing elements</a></li>
+</ul>
+</li>
+<li>
+<a href="#elements">Elements</a>
+
+<ul>
+<li><a href="#button">Button</a></li>
+<li><a href="#checkbox">Checkbox</a></li>
+<li><a href="#dropdown">Dropdown</a></li>
+<li><a href="#flatdropdown">FlatDropdown</a></li>
+<li><a href="#flattextinput">FlatTextinput</a></li>
+<li><a href="#horizontalseparator">HorizontalSeparator</a></li>
+<li><a href="#horizontalspacing">HorizontalSpacing</a></li>
+<li><a href="#iconbutton">IconButton</a></li>
+<li><a href="#imagebutton">ImageButton</a></li>
+<li><a href="#tabs">Tabs</a></li>
+<li><a href="#textinput">Textinput</a></li>
+<li><a href="#verticalseparator">VerticalSeparator</a></li>
+<li><a href="#verticalspacing">VerticalSpacing</a></li>
+</ul>
+</li>
+<li>
+<a href="#theme">Theme</a>
+
+<ul>
+<li><a href="#changing-the-theme">Changing the theme</a></li>
+</ul>
+</li>
+</ul>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Require the <a href="https://github.com/adonaac/yaoui/tree/master/yaoui">module</a>:</p>
+
+<div class="highlight highlight-lua"><pre>yui <span class="pl-k">=</span> <span class="pl-c1">require</span> <span class="pl-s"><span class="pl-pds">'</span>yaoui<span class="pl-pds">'</span></span></pre></div>
+
+<p>Register it to most of LÖVE's callbacks:</p>
+
+<div class="highlight highlight-lua"><pre><span class="pl-k">function</span> <span class="pl-en">love.</span><span class="pl-en">load</span>()
+  yui.<span class="pl-smi">UI</span>.<span class="pl-c1">registerEvents</span>()
+<span class="pl-k">end</span></pre></div>
+
+<p>And update:</p>
+
+<div class="highlight highlight-lua"><pre><span class="pl-k">function</span> <span class="pl-en">love.</span><span class="pl-en">update</span>(<span class="pl-smi">dt</span>)
+  yui.<span class="pl-c1">update</span>({})
+<span class="pl-k">end</span></pre></div>
+
+<h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>The main idea behind yaoui is the usage of 3 main elements for directing UI layout: <strong>views</strong>, <strong>stacks</strong> and <strong>flows</strong>. The idea is taken from the Ruby <a href="http://shoesrb.com/">shoes</a> library. Check that link out since it's immediately obvious what stacks and flows do.</p>
 
 <h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<a id="view" class="anchor" href="#view" aria-hidden="true"><span class="octicon octicon-link"></span></a>View</h3>
 
-<p>We’ve crafted some handsome templates for you to use. Go ahead and click 'Continue to layouts' to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved.</p>
+<p>Views are effectively windows that can contain a Stack or a Flow. You can specify the position of a view, as well as its margins:</p>
+
+<div class="highlight highlight-lua"><pre><span class="pl-k">function</span> <span class="pl-en">love.</span><span class="pl-en">load</span>()
+  yui.<span class="pl-smi">UI</span>.<span class="pl-c1">registerEvents</span>()
+  yui.<span class="pl-smi">debug_draw</span> <span class="pl-k">=</span> <span class="pl-c1">true</span>
+
+  view <span class="pl-k">=</span> yui.<span class="pl-c1">View</span>(<span class="pl-c1">50</span>, <span class="pl-c1">50</span>, <span class="pl-c1">400</span>, <span class="pl-c1">300</span>, {
+    margin_top <span class="pl-k">=</span> <span class="pl-c1">10</span>,
+    margin_left <span class="pl-k">=</span> <span class="pl-c1">10</span>,
+    yui.<span class="pl-c1">Stack</span>({
+      yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Some button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+      yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Some button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+      yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Some button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+    })
+  })
+<span class="pl-k">end</span>
+
+<span class="pl-k">function</span> <span class="pl-en">love.</span><span class="pl-en">update</span>(<span class="pl-smi">dt</span>)
+  yui.<span class="pl-c1">update</span>({view})
+  view:<span class="pl-c1">update</span>(dt)
+<span class="pl-k">end</span>
+
+<span class="pl-k">function</span> <span class="pl-en">love.</span><span class="pl-en">draw</span>()
+  view:<span class="pl-c1">draw</span>()
+<span class="pl-k">end</span></pre></div>
+
+<p>And that will get you something like this (yui.debug_draw is set to true so you can see View and Stack area rectangles):</p>
+
+<p><img src="http://i.imgur.com/VBBfpLi.gif" alt="ya1"></p>
+
+<hr>
 
 <h3>
-<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating pages manually</h3>
+<a id="stack" class="anchor" href="#stack" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stack</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>Stacks let you stack UI elements together on top of each other. You can set its margins as well as the spacing between each element. You can also make it so that elements are added from the bottom of the Stack instead of from the top.</p>
+
+<p>Continuing from the previous example, this:</p>
+
+<div class="highlight highlight-lua"><pre>view <span class="pl-k">=</span> yui.<span class="pl-c1">View</span>(<span class="pl-c1">50</span>, <span class="pl-c1">50</span>, <span class="pl-c1">400</span>, <span class="pl-c1">300</span>, {
+  margin_top <span class="pl-k">=</span> <span class="pl-c1">10</span>,
+  margin_left <span class="pl-k">=</span> <span class="pl-c1">10</span>,
+  yui.<span class="pl-c1">Stack</span>({margin_left <span class="pl-k">=</span> <span class="pl-c1">10</span>, margin_top <span class="pl-k">=</span> <span class="pl-c1">10</span>, margin_bottom <span class="pl-k">=</span> <span class="pl-c1">10</span>, margin_right <span class="pl-k">=</span> <span class="pl-c1">10</span>, spacing <span class="pl-k">=</span> <span class="pl-c1">5</span>,
+    yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Some button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+    yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Some button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+    yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Some button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+
+    bottom <span class="pl-k">=</span> {
+      yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Other button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+      yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Other button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+      yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Other button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+    }
+  })
+})</pre></div>
+
+<p>Should get you this:</p>
+
+<p><img src="http://i.imgur.com/mmQOZVq.gif" alt="ya2"></p>
+
+<hr>
 
 <h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<a id="flow" class="anchor" href="#flow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Flow</h3>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor’s GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>Flows let you stack UI elements together from left to right. Like with a Stack, you can set a flows margin as well as spacing between each element. You can also start stacking from the right if you want.</p>
+
+<div class="highlight highlight-lua"><pre>view <span class="pl-k">=</span> yui.<span class="pl-c1">View</span>(<span class="pl-c1">50</span>, <span class="pl-c1">50</span>, <span class="pl-c1">600</span>, <span class="pl-c1">300</span>, {
+  margin_top <span class="pl-k">=</span> <span class="pl-c1">10</span>,
+  margin_left <span class="pl-k">=</span> <span class="pl-c1">10</span>,
+  yui.<span class="pl-c1">Flow</span>({margin_left <span class="pl-k">=</span> <span class="pl-c1">10</span>, margin_top <span class="pl-k">=</span> <span class="pl-c1">10</span>, margin_bottom <span class="pl-k">=</span> <span class="pl-c1">10</span>, margin_right <span class="pl-k">=</span> <span class="pl-c1">10</span>, spacing <span class="pl-k">=</span> <span class="pl-c1">5</span>,
+    yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Some button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+    yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Some button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+
+    right <span class="pl-k">=</span> {
+      yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Other button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+      yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Other button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+    }
+  })
+})</pre></div>
+
+<p><img src="http://i.imgur.com/I4rMyyo.gif" alt="ya3"></p>
+
+<hr>
+
+<p>With these 3 main elements you get a good compromise between not having to do any manual placement but also being able to lay your elements out in a way that looks appealing. You can put Flows inside Stacks, Stacks inside Flows, Stacks inside Stacks, etc and have them be nested in whatever way you want. The only limitation is that a View should only have one element and that element should be either a Stack or a Flow (and then inside this Stack/Flow you can do whatever).</p>
 
 <h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<a id="accessing-elements" class="anchor" href="#accessing-elements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Accessing elements</h3>
 
-<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
+<p>All elements in the View tree can be accessed from the view. In the examples above, for instance, if we wanted to access the right-most button on the Flow, we'd do:</p>
+
+<div class="highlight highlight-lua"><pre>view[<span class="pl-c1">1</span>].<span class="pl-smi">right</span>[<span class="pl-c1">2</span>]</pre></div>
+
+<p>Here <code>[1]</code> refers to the Flow, <code>right</code> refers to elements that stack from the right, and <code>[2]</code> refers to the second button (right-most). To make thinks easier we can also define <code>name</code> attributes for each element, for instance:</p>
+
+<div class="highlight highlight-lua"><pre>view <span class="pl-k">=</span> yui.<span class="pl-c1">View</span>(<span class="pl-c1">50</span>, <span class="pl-c1">50</span>, <span class="pl-c1">600</span>, <span class="pl-c1">300</span>, {
+  margin_top <span class="pl-k">=</span> <span class="pl-c1">10</span>,
+  margin_left <span class="pl-k">=</span> <span class="pl-c1">10</span>,
+  yui.<span class="pl-c1">Flow</span>({
+    name <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>MainFlow<span class="pl-pds">'</span></span>,
+    margin_left <span class="pl-k">=</span> <span class="pl-c1">10</span>, margin_top <span class="pl-k">=</span> <span class="pl-c1">10</span>, margin_bottom <span class="pl-k">=</span> <span class="pl-c1">10</span>, margin_right <span class="pl-k">=</span> <span class="pl-c1">10</span>, spacing <span class="pl-k">=</span> <span class="pl-c1">5</span>,
+    yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Some button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+    yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Some button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+
+    right <span class="pl-k">=</span> {
+      yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Other button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+      yui.<span class="pl-c1">Button</span>({name <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>RightMostButton<span class="pl-pds">'</span></span>, text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Other button<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button hover<span class="pl-pds">'</span></span>}),
+    }
+  })
+})</pre></div>
+
+<p>And now to get the right-most button we can do:</p>
+
+<div class="highlight highlight-lua"><pre>view.<span class="pl-smi">MainFlow</span>.<span class="pl-smi">right</span>.<span class="pl-smi">RightMostButton</span></pre></div>
+
+<p>All UI elements created with yaoui can have a <code>name</code> attribute attached to them so that they can be accessed in this manner. If they don't have this <code>name</code> attribute they can still be accessed via their index position.</p>
+
+<h2>
+<a id="elements" class="anchor" href="#elements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Elements</h2>
+
+<p>Here follows a description of all UI elements. For elements where <em>icons</em> are available they refer to <a href="http://fontawesome.io/icons/">Font Awesome Icons</a>. All icons can be specified with <code>icon = fa-icon_name</code> where <code>icon_name</code> is the Font Awesome icon name.</p>
+
+<h3>
+<a id="button" class="anchor" href="#button" aria-hidden="true"><span class="octicon octicon-link"></span></a>Button</h3>
+
+<div class="highlight highlight-lua"><pre>yui.<span class="pl-c1">Button</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Button text<span class="pl-pds">'</span></span>, onClick <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">self</span>) <span class="pl-c1">print</span>(<span class="pl-c1">1</span>) <span class="pl-k">end</span>})</pre></div>
+
+<h4>
+<a id="construction-options" class="anchor" href="#construction-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construction options</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Description</th>
+<th align="left">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="left">button's name</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">text</td>
+<td align="left">button's text</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">icon</td>
+<td align="left">button's Font Awesome icon</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">icon_right</td>
+<td align="left">if the icon should be on the right of the button's text instead of on the left</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">size</td>
+<td align="left">button's size (affects font, icon, height)</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">hover</td>
+<td align="left">button's hover text</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">onClick</td>
+<td align="left">function called on button click, receives the button object as an argument</td>
+<td align="left">no</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="attributes" class="anchor" href="#attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Attribute</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">button</td>
+<td align="left">Thranduil button object</td>
+</tr>
+<tr>
+<td align="left">icon_str</td>
+<td align="left">icon string (fa-icon_name)</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods</h4>
+
+<p><strong>setLoading():</strong> if the button has an icon, then this will set the icon to a loading animation. Useful when a button triggers some action that takes some time to perform.</p>
+
+<p><strong>unsetLoading():</strong> sets the button icon back to normal.</p>
+
+<hr>
+
+<h3>
+<a id="checkbox" class="anchor" href="#checkbox" aria-hidden="true"><span class="octicon octicon-link"></span></a>Checkbox</h3>
+
+<div class="highlight highlight-lua"><pre>yui.<span class="pl-c1">Checkbox</span>({text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Checkbox text<span class="pl-pds">'</span></span>, onClick <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">self</span>) <span class="pl-c1">print</span>(<span class="pl-c1">1</span>) <span class="pl-k">end</span>})</pre></div>
+
+<h4>
+<a id="construction-options-1" class="anchor" href="#construction-options-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construction options</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Description</th>
+<th align="left">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="left">checkbox's name</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">text</td>
+<td align="left">checkbox's text</td>
+<td align="left">yes</td>
+</tr>
+<tr>
+<td align="left">size</td>
+<td align="left">checkbox's size (affects font, icon, height)</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">onClick</td>
+<td align="left">function called on checkbox click, receives the checkbox object as an argument</td>
+<td align="left">no</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="attributes-1" class="anchor" href="#attributes-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Attribute</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">checkbox</td>
+<td align="left">Thranduil checkbox object</td>
+</tr>
+<tr>
+<td align="left">checked</td>
+<td align="left">if the checkbox is checked or not</td>
+</tr>
+<tr>
+<td align="left">icon</td>
+<td align="left">checkbox checked icon, defaults to <code>yui.Theme.font_awesome['fa-check']</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h3>
+<a id="dropdown" class="anchor" href="#dropdown" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dropdown</h3>
+
+<div class="highlight highlight-lua"><pre>yui.<span class="pl-c1">Dropdown</span>({options <span class="pl-k">=</span> {<span class="pl-s"><span class="pl-pds">'</span>All<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Option1<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Option2<span class="pl-pds">'</span></span>}, onSelect <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">self, option</span>) <span class="pl-c1">print</span>(option) <span class="pl-k">end</span>})</pre></div>
+
+<h4>
+<a id="construction-options-2" class="anchor" href="#construction-options-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construction options</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Description</th>
+<th align="left">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="left">dropdown's name</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">options (table of strings)</td>
+<td align="left">dropdown options</td>
+<td align="left">yes</td>
+</tr>
+<tr>
+<td align="left">title</td>
+<td align="left">dropdown title (text to the left of it)</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">drop_up (boolean)</td>
+<td align="left">if the dropdown should go up instead of down</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">size</td>
+<td align="left">dropdown's size (affects font, icon, height)</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">onSelect</td>
+<td align="left">function called on option select, receives the object and the option as arguments</td>
+<td align="left">no</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="attributes-2" class="anchor" href="#attributes-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Attribute</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">main_button</td>
+<td align="left">Thranduil button object, main dropdown button</td>
+</tr>
+<tr>
+<td align="left">down_area</td>
+<td align="left">Thranduil frame object, visible and updates when the dropdown list is enabled</td>
+</tr>
+<tr>
+<td align="left">current_option</td>
+<td align="left">currently selected option</td>
+</tr>
+<tr>
+<td align="left">icon</td>
+<td align="left">dropdown main button's icon, defaults to <code>yui.Theme.font_awesome['fa-sort-desc']</code>
+</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h3>
+<a id="flatdropdown" class="anchor" href="#flatdropdown" aria-hidden="true"><span class="octicon octicon-link"></span></a>FlatDropdown</h3>
+
+<p>Exactly the same as a Dropdown, just looks different.</p>
+
+<h3>
+<a id="flattextinput" class="anchor" href="#flattextinput" aria-hidden="true"><span class="octicon octicon-link"></span></a>FlatTextinput</h3>
+
+<p>Exactly the same as a Textinput, just looks different.</p>
+
+<h3>
+<a id="horizontalseparator" class="anchor" href="#horizontalseparator" aria-hidden="true"><span class="octicon octicon-link"></span></a>HorizontalSeparator</h3>
+
+<div class="highlight highlight-lua"><pre>yui.<span class="pl-c1">HorizontalSeparator</span>({w <span class="pl-k">=</span> <span class="pl-c1">100</span>})</pre></div>
+
+<h4>
+<a id="construction-options-3" class="anchor" href="#construction-options-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construction options</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Description</th>
+<th align="left">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="left">horizontal separator's name</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">w</td>
+<td align="left">the width of the line</td>
+<td align="left">yes</td>
+</tr>
+<tr>
+<td align="left">margin_left</td>
+<td align="left">left margin</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">margin_right</td>
+<td align="left">right margin</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">size</td>
+<td align="left">separator's size (affects height)</td>
+<td align="left">no</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h3>
+<a id="horizontalspacing" class="anchor" href="#horizontalspacing" aria-hidden="true"><span class="octicon octicon-link"></span></a>HorizontalSpacing</h3>
+
+<div class="highlight highlight-lua"><pre>yui.<span class="pl-c1">HorizontalSpacing</span>({w <span class="pl-k">=</span> <span class="pl-c1">50</span>})</pre></div>
+
+<h4>
+<a id="construction-options-4" class="anchor" href="#construction-options-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construction options</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Description</th>
+<th align="left">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="left">horizontal spacing's name</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">w</td>
+<td align="left">the width of the spacing</td>
+<td align="left">yes</td>
+</tr>
+<tr>
+<td align="left">size</td>
+<td align="left">spacing's size (affects height)</td>
+<td align="left">no</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h3>
+<a id="iconbutton" class="anchor" href="#iconbutton" aria-hidden="true"><span class="octicon octicon-link"></span></a>IconButton</h3>
+
+<div class="highlight highlight-lua"><pre>yui.<span class="pl-c1">IconButton</span>({icon <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>fa-close<span class="pl-pds">'</span></span>, onClick <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">self</span>) <span class="pl-c1">print</span>(<span class="pl-c1">1</span>) <span class="pl-k">end</span>})</pre></div>
+
+<h4>
+<a id="construction-options-5" class="anchor" href="#construction-options-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construction options</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Description</th>
+<th align="left">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="left">icon button's name</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">icon</td>
+<td align="left">font awesome icon</td>
+<td align="left">yes</td>
+</tr>
+<tr>
+<td align="left">hover</td>
+<td align="left">icon button's hover text</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">size</td>
+<td align="left">icon button's size (affects font, icon, height)</td>
+<td align="left">yes</td>
+</tr>
+<tr>
+<td align="left">onClick</td>
+<td align="left">function called on icon button click, receives the icon button object as an argument</td>
+<td align="left">no</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="attributes-3" class="anchor" href="#attributes-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Attribute</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">button</td>
+<td align="left">Thranduil button object</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h3>
+<a id="imagebutton" class="anchor" href="#imagebutton" aria-hidden="true"><span class="octicon octicon-link"></span></a>ImageButton</h3>
+
+<div class="highlight highlight-lua"><pre>yui.<span class="pl-c1">ImageButton</span>({image <span class="pl-k">=</span> some_image, onClick <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">self</span>) <span class="pl-c1">print</span>(<span class="pl-c1">1</span>) <span class="pl-k">end</span>})</pre></div>
+
+<h4>
+<a id="construction-options-6" class="anchor" href="#construction-options-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construction options</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Description</th>
+<th align="left">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="left">image button's name</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">rounded_corners (boolean)</td>
+<td align="left">if the image button has rounded corners or not</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">image</td>
+<td align="left">image button's image (LÖVE image object)</td>
+<td align="left">yes</td>
+</tr>
+<tr>
+<td align="left">ix, iy</td>
+<td align="left">image button's image offset (from top-left)</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">overlayNew</td>
+<td align="left">function called on object creation, receives the image button object as an argument</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">overlayUpdate</td>
+<td align="left">function called every update, receives the image button object and dt as an argument</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">overlay</td>
+<td align="left">function called every draw call, receives the image button object as an argument</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">onClick</td>
+<td align="left">function called on image button click, receives the image button object as an argument</td>
+<td align="left">no</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="attributes-4" class="anchor" href="#attributes-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Attribute</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">button</td>
+<td align="left">Thranduil button object</td>
+</tr>
+<tr>
+<td align="left">img</td>
+<td align="left">image button image</td>
+</tr>
+<tr>
+<td align="left">alpha</td>
+<td align="left">overlay alpha (goes to 255 as the user hovers, back to 0 when not hovering)</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h3>
+<a id="tabs" class="anchor" href="#tabs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tabs</h3>
+
+<div class="highlight highlight-lua"><pre>yui.<span class="pl-c1">Tabs</span>({tabs <span class="pl-k">=</span> {
+    {text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Tab1<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Tab1<span class="pl-pds">'</span></span>, onClick <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">self</span>) <span class="pl-c1">print</span>(<span class="pl-c1">1</span>) <span class="pl-k">end</span>},
+    {text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Tab2<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Tab2<span class="pl-pds">'</span></span>, onClick <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">self</span>) <span class="pl-c1">print</span>(<span class="pl-c1">2</span>) <span class="pl-k">end</span>},
+    {text <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Tab3<span class="pl-pds">'</span></span>, hover <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>Tab3<span class="pl-pds">'</span></span>, onClick <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">self</span>) <span class="pl-c1">print</span>(<span class="pl-c1">3</span>) <span class="pl-k">end</span>},
+}})</pre></div>
+
+<h4>
+<a id="construction-options-7" class="anchor" href="#construction-options-7" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construction options</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Description</th>
+<th align="left">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="left">tabs' name</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">tabs (table of tabs)</td>
+<td align="left">tabs list</td>
+<td align="left">yes</td>
+</tr>
+<tr>
+<td align="left">size</td>
+<td align="left">tabs' size (affects font, icon, height)</td>
+<td align="left">no</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="tab-construction-options" class="anchor" href="#tab-construction-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tab construction options</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Description</th>
+<th align="left">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">text</td>
+<td align="left">tab's text</td>
+<td align="left">yes</td>
+</tr>
+<tr>
+<td align="left">hover</td>
+<td align="left">tab's hover text</td>
+<td align="left">yes</td>
+</tr>
+<tr>
+<td align="left">onClick</td>
+<td align="left">function called on tab selection, receives the tab object as an argument</td>
+<td align="left">no</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="attributes-5" class="anchor" href="#attributes-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Attribute</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">buttons</td>
+<td align="left">tabs Thranduil button objects</td>
+</tr>
+<tr>
+<td align="left">selected_tab</td>
+<td align="left">currently selected tab</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h3>
+<a id="textinput" class="anchor" href="#textinput" aria-hidden="true"><span class="octicon octicon-link"></span></a>Textinput</h3>
+
+<div class="highlight highlight-lua"><pre>yui.<span class="pl-c1">Textinput</span>({onEnter <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">self, text</span>) <span class="pl-c1">print</span>(text) <span class="pl-k">end</span>})</pre></div>
+
+<h4>
+<a id="construction-options-8" class="anchor" href="#construction-options-8" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construction options</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Description</th>
+<th align="left">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="left">textinput's name</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">size</td>
+<td align="left">textinput's size (affects font and height)</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">onEnter</td>
+<td align="left">function called on pressing enter, receives the textinput object and the text as arguments</td>
+<td align="left">no</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="attributes-6" class="anchor" href="#attributes-6" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Attribute</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">textarea</td>
+<td align="left">Thranduil textinput object</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="methods-1" class="anchor" href="#methods-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods</h4>
+
+<p><strong>setText():</strong> sets the textinput's text</p>
+
+<p><strong>getText():</strong> returns the textinput's text</p>
+
+<hr>
+
+<h3>
+<a id="verticalseparator" class="anchor" href="#verticalseparator" aria-hidden="true"><span class="octicon octicon-link"></span></a>VerticalSeparator</h3>
+
+<div class="highlight highlight-lua"><pre>yui.<span class="pl-c1">VerticalSeparator</span>({h <span class="pl-k">=</span> <span class="pl-c1">100</span>})</pre></div>
+
+<h4>
+<a id="construction-options-9" class="anchor" href="#construction-options-9" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construction options</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Description</th>
+<th align="left">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="left">vertical separator's name</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">h</td>
+<td align="left">the height of the line</td>
+<td align="left">yes</td>
+</tr>
+<tr>
+<td align="left">margin_top</td>
+<td align="left">top margin</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">margin_bottom</td>
+<td align="left">bottom margin</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">size</td>
+<td align="left">separator's size (affects width)</td>
+<td align="left">no</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h3>
+<a id="verticalspacing" class="anchor" href="#verticalspacing" aria-hidden="true"><span class="octicon octicon-link"></span></a>VerticalSpacing</h3>
+
+<div class="highlight highlight-lua"><pre>yui.<span class="pl-c1">VerticalSpacing</span>({h <span class="pl-k">=</span> <span class="pl-c1">50</span>})</pre></div>
+
+<h4>
+<a id="construction-options-10" class="anchor" href="#construction-options-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>Construction options</h4>
+
+<table>
+<thead>
+<tr>
+<th align="left">Option</th>
+<th align="left">Description</th>
+<th align="left">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">name</td>
+<td align="left">vertical spacing's name</td>
+<td align="left">no</td>
+</tr>
+<tr>
+<td align="left">h</td>
+<td align="left">the height of the spacing</td>
+<td align="left">yes</td>
+</tr>
+<tr>
+<td align="left">size</td>
+<td align="left">spacing's size (affects width)</td>
+<td align="left">no</td>
+</tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>
+<a id="theme" class="anchor" href="#theme" aria-hidden="true"><span class="octicon octicon-link"></span></a>Theme</h2>
+
+<p>The default theme file can be found in <code>yaoui/YaouiTheme.lua</code>. Internally yaoui uses <a href="https://github.com/adonaac/thranduil">Thranduil</a> to make everything work, and so the theming system is the same here as it is there. Basically it's one big file with functions for all UI objects. The theme also has a few helpful variables (the theme itself can be accessed via <code>yui.Theme</code>):</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Variable</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">colors</td>
+<td align="left">a table containing all colors used by all elements</td>
+</tr>
+<tr>
+<td align="left">font_awesome</td>
+<td align="left">the Font Awesome icon table, <code>font_awesome[fa-icon_name]</code> returns you the icon character which can only be drawn with the Font Awesome font</td>
+</tr>
+<tr>
+<td align="left">font_awesome_path</td>
+<td align="left">path to the Font Awesome font</td>
+</tr>
+<tr>
+<td align="left">open_sans_regular</td>
+<td align="left">path to the Open Sans Regular font</td>
+</tr>
+<tr>
+<td align="left">open_sans_light</td>
+<td align="left">path to the Open Sans Light font</td>
+</tr>
+<tr>
+<td align="left">open_sans_bold</td>
+<td align="left">path to the Open Sans Bold font</td>
+</tr>
+<tr>
+<td align="left">open_sans_semibold</td>
+<td align="left">path to the Open Sans Semibold font</td>
+</tr>
+</tbody>
+</table>
+
+<h3>
+<a id="changing-the-theme" class="anchor" href="#changing-the-theme" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changing the theme</h3>
+
+<p>I'm not going to list all theme colors here since you can easily check them yourself. But the easiest way to change the look of the theme is by changing the colors around. For instance, the following code swaps blue and red components for each color:</p>
+
+<div class="highlight highlight-lua"><pre><span class="pl-k">for</span> color_name, color <span class="pl-k">in</span> <span class="pl-c1">pairs</span>(yui.<span class="pl-smi">Theme</span>.<span class="pl-smi">colors</span>) <span class="pl-k">do</span>
+  yui.<span class="pl-smi">Theme</span>.<span class="pl-smi">colors</span>[color_name] <span class="pl-k">=</span> {color[<span class="pl-c1">3</span>], color[<span class="pl-c1">2</span>], color[<span class="pl-c1">1</span>]}
+<span class="pl-k">end</span></pre></div>
+
+<p><img src="http://i.imgur.com/O1nAnjo.jpg" alt="red"></p>
+
+<p>The second way of changing the theme is by specifying the draw functions of each element yourself. This is harder because it requires you to have an understanding of the attributes of each UI element and how they work, but it's very doable. </p>
+
+<p>You should start by removing all <code>new</code> and <code>update</code> functions, since those are only used if you need something like tweens or transitions. Then you should clear out the draw functions (remove all their content) and start defining, for each object you wanna use, how they will be drawn. Use Thranduil's TestTheme and yaoui's YaouiTheme as reference points and go from there. It's also important to keep all draw functions defined, even if they're empty, otherwise the program won't run.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>LICENSE</h2>
+
+<p>You can do whatever you want with this. See the <a href="https://github.com/adonaac/yaoui/blob/master/LICENSE">LICENSE</a>.</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/adonaac/yaoui">Yaoui</a> is maintained by <a href="https://github.com/adonaac">adonaac</a>.</span>
