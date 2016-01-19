@@ -530,9 +530,9 @@ YaouiTheme.ImageButton.draw = function(self)
         if self.parent.rounded_corners then love.graphics.rectangle('fill', self.x, self.y, self.w, self.h, self.h/18, self.h/18)
         else love.graphics.rectangle('fill', self.x, self.y, self.w, self.h) end
     end)
-    love.graphics.setStencilTest(true)
+    love.graphics.setStencilTest("greater", 0)
     love.graphics.draw(self.parent.img, self.x - self.parent.ix, self.y - self.parent.iy)
-    love.graphics.setStencilTest(false)
+    love.graphics.setStencilTest()
 
     if self.parent.overlay then self.parent.overlay(self.parent) end
     love.graphics.setColor(255, 255, 255, 255)
